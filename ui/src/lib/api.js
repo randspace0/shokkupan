@@ -4,3 +4,4 @@ export * from "./apis/services.js";
 export * from "./apis/settings.js";
 export * from "./apis/exec.js";
 export * from "./apis/setup.js";
+export * from "./apis/notifications.js";

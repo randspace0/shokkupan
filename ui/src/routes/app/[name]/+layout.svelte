@@ -23,6 +23,7 @@
     { name: "Environment", path: "environment" },
     { name: "Logs", path: "logs" },
     { name: "Network", path: "network" },
+    { name: "Notifications", path: "notifications" },
     { name: "Services", path: "services" },
     // {"name": "Terminal", "path": "terminal"},
     { name: "Storage", path: "storage" },

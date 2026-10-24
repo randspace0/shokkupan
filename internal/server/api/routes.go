@@ -5,6 +5,7 @@ import (
 	"gitlab.com/texm/shokku/internal/env"
 	"gitlab.com/texm/shokku/internal/server/api/apps"
 	"gitlab.com/texm/shokku/internal/server/api/auth"
+	"gitlab.com/texm/shokku/internal/server/api/notifications"
 	"gitlab.com/texm/shokku/internal/server/api/services"
 	"gitlab.com/texm/shokku/internal/server/api/settings"
 	"gitlab.com/texm/shokku/internal/server/api/setup"
@@ -18,6 +19,7 @@ func RegisterRoutes(e *env.Env, authMiddleware []echo.MiddlewareFunc) {
 
 	protectedApi := g.Group("", authMiddleware...)
 	apps.RegisterRoutes(e, protectedApi.Group("/apps"))
+	notifications.RegisterRoutes(e, protectedApi.Group("/notifications"))
 	services.RegisterRoutes(e, protectedApi.Group("/services"))
 	settings.RegisterRoutes(e, protectedApi.Group("/settings"))
 
