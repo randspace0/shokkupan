@@ -19,6 +19,7 @@
   const pages = [
     { name: "Overview", path: "" },
     { name: "Builds", path: "builds" },
+    { name: "Cron", path: "cron" },
     { name: "Domains", path: "domains" },
     { name: "Environment", path: "environment" },
     { name: "Logs", path: "logs" },

@@ -52,6 +52,9 @@ func RegisterRoutes(e *env.Env, g *echo.Group) {
 	g.GET("/networks", e.H(GetAppNetworksReport))
 	g.POST("/networks", e.H(SetAppNetworks))
 
+	g.GET("/cron", e.H(GetAppCron))
+	g.POST("/cron/run", e.H(RunAppCron))
+
 	g.GET("/logs", e.H(GetAppLogs))
 
 	g.GET("/config", e.H(GetAppConfig))
