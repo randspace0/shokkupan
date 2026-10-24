@@ -2,8 +2,8 @@ package commands
 
 import (
 	"github.com/texm/dokku-go"
+	"gitlab.com/texm/shokku/internal/randstr"
 	"gitlab.com/texm/shokku/internal/server/dto"
-	"math/rand"
 	"time"
 )
 
@@ -29,16 +29,8 @@ type ExecutionStatus struct {
 	StderrReadError error
 }
 
-func generateCommandExecutionId() string {
-	b := make([]rune, 16)
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-	return string(b)
-}
-
 func RequestExecution(cmd AsyncDokkuCommand, callback CallbackFunc) string {
-	id := generateCommandExecutionId()
+	id := randstr.String(16)
 
 	exec := execution{
 		Id:       id,

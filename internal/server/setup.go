@@ -5,6 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"gitlab.com/texm/shokku/internal/env"
 	"gitlab.com/texm/shokku/internal/models"
+	"gitlab.com/texm/shokku/internal/randstr"
 	"gitlab.com/texm/shokku/internal/server/auth"
 	"gitlab.com/texm/shokku/internal/server/github"
 	"time"
@@ -55,7 +56,7 @@ func initServerState(e *env.Env) (*models.Server, error) {
 	}
 
 	if state.SetupKey == "" {
-		state.SetupKey = generateRandomString(16)
+		state.SetupKey = randstr.String(16)
 		if err := e.DB.Save(&state).Error; err != nil {
 			log.Error().
 				Err(err).
