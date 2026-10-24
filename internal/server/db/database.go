@@ -29,6 +29,7 @@ func Init(dsn string) (*gorm.DB, error) {
 		&models.SSHKey{},
 		&models.GithubApp{},
 		&models.AppSetupConfig{},
+		&models.AppStatusEvent{},
 	)
 	if err != nil {
 		return nil, err

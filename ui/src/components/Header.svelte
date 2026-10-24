@@ -7,6 +7,7 @@
   export let executionWindowVisible = false;
 
   const authenticatedLinks = [
+    { href: "/monitoring", text: "Monitoring" },
     { href: "/settings", text: "Settings" },
     { href: "/logout", text: "Logout" },
   ];
