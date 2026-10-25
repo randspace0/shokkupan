@@ -26,7 +26,7 @@ This file is a working plan. Update each stage's **Status** as work lands, and d
 | Settings | HTTP auth | Missing. Needs a Dokku plugin (see Stage 4). |
 | Settings | GitHub webhook setup | Partly exists (`api/github.go`, `/github/events`). *Verify* the flow. |
 | Settings | Linked services | Exists (`/apps/services`). |
-| Also open | Notifications (#2), monitoring and charts (#4, #5), cron (#3) | New pages in open PRs, to be ported to Nuxt. |
+| Also open | Notifications (#2), monitoring and charts (#4, #5), cron (#3) | New Svelte pages in open PRs. |
 
 ### Services
 | Area | Detail | Today |
