@@ -7,6 +7,7 @@ import (
 
 func RegisterRoutes(e *env.Env, g *echo.Group) {
 	g.GET("/versions", e.H(GetVersions))
+	g.POST("/sync", e.H(SyncDokkuState))
 
 	g.GET("/events", e.H(GetEventLogs))
 	g.GET("/events/list", e.H(GetEventLogsList))

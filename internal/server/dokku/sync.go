@@ -8,6 +8,7 @@ import (
 	"gitlab.com/texm/shokku/internal/env"
 	"gitlab.com/texm/shokku/internal/models"
 	"strings"
+	"time"
 )
 
 // todo: deduplicate from api/services
@@ -17,6 +18,17 @@ var (
 )
 
 const FilteredApp = "shokku"
+
+// syncInterval is how often apps created outside shokkupan (CI, the dokku
+// CLI) are picked up.
+const syncInterval = 5 * time.Minute
+
+// SyncPeriodically re-syncs dokku state until the process exits.
+func SyncPeriodically(e *env.Env) {
+	for range time.Tick(syncInterval) {
+		SyncState(e)
+	}
+}
 
 func SyncState(e *env.Env) {
 	syncApps(e)

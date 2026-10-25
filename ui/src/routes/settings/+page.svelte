@@ -1,6 +1,6 @@
 <script>
   import { useQuery, useMutation, useQueryClient } from "$lib/query";
-  import { getVersions, getServerMonitoring, setServerMonitoring } from "$lib/api";
+  import { getVersions, getServerMonitoring, setServerMonitoring, syncDokkuState } from "$lib/api";
   import { appTheme } from "$lib/stores";
 
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
@@ -13,6 +13,10 @@
   const queryClient = useQueryClient();
   const toggleMonitoring = useMutation(setServerMonitoring, {
     onSuccess: () => queryClient.invalidateQueries("getServerMonitoring"),
+  });
+
+  const sync = useMutation(syncDokkuState, {
+    onSuccess: () => queryClient.invalidateQueries("getAllAppsOverview"),
   });
 
   const themes = { auto: "auto", light: "corporate", dark: "business" };
@@ -46,6 +50,23 @@
         </span>
       </label>
     </QueryDataWrapper>
+  </Card>
+
+  <Card title="Dokku sync">
+    <p class="text-sm text-base-content/70">
+      Apps created outside Shokkupan (CI, the dokku CLI) are picked up every
+      5 minutes. Sync now to see them immediately.
+    </p>
+    <div slot="actions">
+      <button
+        class="btn btn-primary gap-2"
+        disabled={$sync.isLoading}
+        on:click={() => $sync.mutate()}
+      >
+        {#if $sync.isLoading}<span class="loading loading-spinner loading-xs"></span>{/if}
+        Sync apps and services
+      </button>
+    </div>
   </Card>
 
   <Card title="Versions">

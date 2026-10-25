@@ -97,3 +97,9 @@ export const setServerMonitoring = async (enabled) => {
 		.post({enabled})
 		.res(res => res.ok);
 }
+
+export const syncDokkuState = async () => {
+	return await settingsClient.url("sync")
+		.post()
+		.res(res => res.ok);
+}
