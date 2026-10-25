@@ -5,7 +5,7 @@
     clearNotificationWebhook,
     testNotificationWebhook,
   } from "$lib/api";
-  import { useMutation, useQuery, useQueryClient } from "@sveltestack/svelte-query";
+  import { useMutation, useQuery, useQueryClient } from "$lib/query";
   import Card from "$common/Card.svelte";
   import Error from "$common/Error.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
@@ -45,26 +45,26 @@
 
       <input
         type="text"
-        class="input input-bordered w-full max-w-lg"
+        class="input w-full max-w-lg"
         placeholder="https://discord.com/api/webhooks/..."
         bind:value={webhookUrl}
       />
       <div class="flex gap-2">
         <button
           class="btn btn-primary"
-          class:loading={$save.isLoading}
+          class:btn-loading={$save.isLoading}
           disabled={!webhookUrl}
           on:click={() => $save.mutate()}>Save</button
         >
         <button
           class="btn"
-          class:loading={$test.isLoading}
+          class:btn-loading={$test.isLoading}
           disabled={!$status.data.configured}
           on:click={() => $test.mutate()}>Send test</button
         >
         <button
           class="btn btn-ghost"
-          class:loading={$clear.isLoading}
+          class:btn-loading={$clear.isLoading}
           disabled={!$status.data.configured}
           on:click={() => $clear.mutate()}>Remove</button
         >

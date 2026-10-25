@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import { getAppCron, runAppCron } from "$lib/api";
   import { commandExecutionIds, executionIdDescriptions } from "$lib/stores";
-  import { useMutation, useQuery } from "@sveltestack/svelte-query";
+  import { useMutation, useQuery } from "$lib/query";
   import Card from "$common/Card.svelte";
   import Error from "$common/Error.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";

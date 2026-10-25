@@ -1,6 +1,6 @@
 <script>
   import { getMonitoringStats } from "$lib/api";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import Card from "$common/Card.svelte";
   import Error from "$common/Error.svelte";
   import Sparkline from "./Sparkline.svelte";
