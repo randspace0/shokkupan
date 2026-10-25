@@ -1,0 +1,4 @@
+[plugin]
+description = "Discord notification plugin for Dokku deployments"
+version = "2.0.0"
+[plugin.config]

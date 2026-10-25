@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+discord_test_cmd() {
+  declare desc="Test Discord webhook by sending a test notification"
+  declare cmd="discord:test"
+  [[ "$1" == "$cmd" ]] && shift 1
+
+  local APP="$1"
+  local DOKKU_ROOT="${DOKKU_ROOT:-/home/dokku}"
+  local WEBHOOK_URL=""
+
+  # Determine which webhook URL to use
+  if [[ -n "$APP" ]]; then
+    verify_app_name "$APP"
+    local APP_CONFIG="$DOKKU_ROOT/$APP/DISCORD_URL"
+
+    if [[ -f "$APP_CONFIG" ]]; then
+      WEBHOOK_URL=$(cat "$APP_CONFIG")
+      dokku_log_info1 "Testing app-specific webhook for $APP"
+    else
+      # Fallback to global config
+      local GLOBAL_CONFIG="$DOKKU_ROOT/.discord/DISCORD_URL"
+      if [[ -f "$GLOBAL_CONFIG" ]]; then
+        WEBHOOK_URL=$(cat "$GLOBAL_CONFIG")
+        dokku_log_info1 "Testing global webhook (no app-specific webhook configured for $APP)"
+      fi
+    fi
+  else
+    # Use global webhook
+    local GLOBAL_CONFIG="$DOKKU_ROOT/.discord/DISCORD_URL"
+    if [[ -f "$GLOBAL_CONFIG" ]]; then
+      WEBHOOK_URL=$(cat "$GLOBAL_CONFIG")
+      dokku_log_info1 "Testing global webhook"
+    fi
+  fi
+
+  # Exit if no webhook configured
+  if [[ -z "$WEBHOOK_URL" ]]; then
+    if [[ -n "$APP" ]]; then
+      dokku_log_fail "No Discord webhook URL configured for app $APP or globally"
+    else
+      dokku_log_fail "No Discord webhook URL configured globally"
+    fi
+  fi
+
+  # Gather information for test message
+  local HOSTNAME=""
+  if [[ -f "$DOKKU_ROOT/HOSTNAME" ]]; then
+    HOSTNAME=$(cat "$DOKKU_ROOT/HOSTNAME")
+  else
+    HOSTNAME=$(hostname)
+  fi
+
+  # Build the test message with escaped newlines for JSON
+  local MESSAGE="This is a test notification from Dokku Discord plugin\\nHostname: $HOSTNAME"
+
+  if [[ -n "$APP" ]]; then
+    MESSAGE="$MESSAGE\\nTest triggered for app: $APP"
+  fi
+
+  # Build the JSON payload
+  local TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+  local JSON_PAYLOAD=$(cat <<EOF
+{
+  "embeds": [
+    {
+      "title": "Test Notification",
+      "description": "$MESSAGE",
+      "color": 3447003,
+      "timestamp": "$TIMESTAMP"
+    }
+  ]
+}
+EOF
+)
+
+  # Send test notification
+  dokku_log_info1 "Sending test notification to Discord..."
+
+  local HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+    -X POST \
+    -H "Content-Type: application/json" \
+    -d "$JSON_PAYLOAD" \
+    "$WEBHOOK_URL" 2>/dev/null || echo "000")
+
+  if [[ "$HTTP_STATUS" =~ ^2[0-9][0-9]$ ]]; then
+    dokku_log_info1 "Test notification sent successfully (HTTP $HTTP_STATUS)"
+    dokku_log_info2 "Check your Discord channel for the test message"
+  else
+    dokku_log_fail "Test notification failed (HTTP $HTTP_STATUS). Please verify your webhook URL is correct and still valid in Discord"
+  fi
+}
+
+discord_test_cmd "$@"

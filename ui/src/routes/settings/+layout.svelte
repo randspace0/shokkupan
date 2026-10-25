@@ -11,6 +11,7 @@
     { name: "Docker", path: "docker" },
     { name: "Domains", path: "domains" },
     { name: "Scheduler", path: "scheduler" },
+    { name: "Notifications", path: "notifications" },
     { name: "Plugins", path: "plugins" },
   ];
 </script>

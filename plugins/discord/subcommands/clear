@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+discord_clear_cmd() {
+  declare desc="Clear Discord webhook URL"
+  declare cmd="discord:clear"
+  [[ "$1" == "$cmd" ]] && shift 1
+
+  local APP="$1"
+  local DOKKU_ROOT="${DOKKU_ROOT:-/home/dokku}"
+
+  if [[ -n "$APP" ]]; then
+    verify_app_name "$APP"
+    local CONFIG_PATH="$DOKKU_ROOT/$APP/DISCORD_URL"
+
+    if [[ -f "$CONFIG_PATH" ]]; then
+      rm -f "$CONFIG_PATH"
+      dokku_log_info1 "Discord webhook URL cleared for app $APP"
+    else
+      dokku_log_info1 "No Discord webhook URL configured for app $APP"
+    fi
+  else
+    # Clear global webhook
+    local CONFIG_PATH="$DOKKU_ROOT/.discord/DISCORD_URL"
+
+    if [[ -f "$CONFIG_PATH" ]]; then
+      rm -f "$CONFIG_PATH"
+      dokku_log_info1 "Discord webhook URL cleared globally"
+    else
+      dokku_log_info1 "No Discord webhook URL configured globally"
+    fi
+  fi
+}
+
+discord_clear_cmd "$@"

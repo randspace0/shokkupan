@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+# Install script for dokku-discord plugin
+
+echo "-----> Installing dokku-discord plugin..."
+
+# Navigate to plugin directory
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$PLUGIN_DIR"
+
+# Make all scripts executable
+chmod +x commands
+chmod +x post-deploy
+chmod +x pre-release-builder
+chmod +x subcommands/*
+
+echo "-----> dokku-discord plugin installed successfully!"

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+case "$1" in
+  help | discord:help)
+    cat<<EOF
+    discord:set <webhook-url> [<app>], Set Discord webhook URL (globally or for an app)
+    discord:get [<app>], Get Discord webhook URL
+    discord:clear [<app>], Clear Discord webhook URL
+    discord:test [<app>], Test Discord webhook by sending a test notification
+EOF
+    ;;
+
+  *)
+    exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
+    ;;
+esac

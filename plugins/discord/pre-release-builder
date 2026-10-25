@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+trigger_discord_pre_deploy() {
+  declare desc="Send Discord notification before deployment"
+  declare trigger="pre-release-builder"
+  declare APP="$1"
+  local DOKKU_ROOT="${DOKKU_ROOT:-/home/dokku}"
+
+  # Check if webhook is configured
+  local WEBHOOK_URL=""
+  local APP_CONFIG="$DOKKU_ROOT/$APP/DISCORD_URL"
+  local GLOBAL_CONFIG="$DOKKU_ROOT/.discord/DISCORD_URL"
+
+  if [[ -f "$APP_CONFIG" ]]; then
+    WEBHOOK_URL=$(cat "$APP_CONFIG")
+  elif [[ -f "$GLOBAL_CONFIG" ]]; then
+    # Check if app has DISCORD_NOTIFY env var set
+    local SHOULD_NOTIFY=$(dokku config:get "$APP" DISCORD_NOTIFY 2>/dev/null || echo "")
+    if [[ "$SHOULD_NOTIFY" == "1" ]] || [[ -z "$SHOULD_NOTIFY" ]]; then
+      WEBHOOK_URL=$(cat "$GLOBAL_CONFIG")
+    fi
+  fi
+
+  # Exit silently if no webhook configured
+  if [[ -z "$WEBHOOK_URL" ]]; then
+    return 0
+  fi
+
+  # Gather deployment information
+  local HOSTNAME=""
+  if [[ -f "$DOKKU_ROOT/HOSTNAME" ]]; then
+    HOSTNAME=$(cat "$DOKKU_ROOT/HOSTNAME")
+  else
+    HOSTNAME=$(hostname)
+  fi
+
+  local APP_URL=""
+  local VHOST_PATH="$DOKKU_ROOT/$APP/VHOST"
+  if [[ -f "$VHOST_PATH" ]]; then
+    local VHOST=$(cat "$VHOST_PATH" | head -n 1)
+    APP_URL="http://$VHOST"
+  else
+    APP_URL="http://$HOSTNAME"
+  fi
+
+  local COMMIT_AUTHOR=""
+  if [[ -f "$DOKKU_ROOT/$APP/.commit_author" ]]; then
+    COMMIT_AUTHOR=$(cat "$DOKKU_ROOT/$APP/.commit_author")
+  fi
+
+  # Build the message with escaped newlines for JSON
+  local MESSAGE="🚀 Deployment starting...\\nApplication: $APP\\nHostname: $HOSTNAME\\nURL: $APP_URL"
+
+  if [[ -n "$COMMIT_AUTHOR" ]]; then
+    MESSAGE="$COMMIT_AUTHOR\\n$MESSAGE"
+  fi
+
+  # Build the JSON payload (using yellow/amber color for in-progress)
+  local TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+  local JSON_PAYLOAD=$(cat <<EOF
+{
+  "embeds": [
+    {
+      "description": "$MESSAGE",
+      "color": 16776960,
+      "timestamp": "$TIMESTAMP"
+    }
+  ]
+}
+EOF
+)
+
+  # Send notification
+  local HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+    -X POST \
+    -H "Content-Type: application/json" \
+    -d "$JSON_PAYLOAD" \
+    "$WEBHOOK_URL" 2>/dev/null || echo "000")
+
+  if [[ "$HTTP_STATUS" =~ ^2[0-9][0-9]$ ]]; then
+    dokku_log_info1 "Discord pre-deploy notification sent successfully (HTTP $HTTP_STATUS)"
+  else
+    dokku_log_warn "Discord pre-deploy notification failed (HTTP $HTTP_STATUS)"
+  fi
+}
+
+trigger_discord_pre_deploy "$@"
