@@ -1,4 +1,3 @@
-import path from "path";
 import { sveltekit } from '@sveltejs/kit/vite';
 
 const config = {
@@ -18,13 +17,7 @@ const config = {
 			}
 		}
 	},
-	resolve: {
-		alias: {
-			$src: path.resolve("./src"),
-			$components: path.resolve("./src/components"),
-			$common: path.resolve("./src/components/common"),
-		}
-	},
+
 }
 
 export default config;
