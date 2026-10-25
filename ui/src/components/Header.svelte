@@ -20,11 +20,12 @@
 
 <nav
   aria-label="Main"
-  class="bg-neutral text-neutral-content flex flex-col md:flex-row items-center w-full justify-between gap-2 p-4 mx-auto"
+  class="bg-neutral text-neutral-content border-b border-neutral-content/10 flex flex-col md:flex-row items-center w-full justify-between gap-2 p-4 mx-auto"
 >
   <a
-    class="inline-flex items-center justify-center btn btn-ghost normal-case text-xl min-h-11 focus-visible:outline-2 focus-visible:outline-offset-2"
-    href="/">shokkupan</a
+    class="inline-flex items-center justify-center gap-2 btn btn-ghost normal-case text-xl min-h-11 focus-visible:outline-2 focus-visible:outline-offset-2"
+    href="/"
+    ><img src="/favicon.svg" alt="" class="size-7" />shokkupan</a
   >
 
   {#if showExecutionButton}

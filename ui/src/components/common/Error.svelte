@@ -21,17 +21,10 @@
   }
 </script>
 
-<div class="card bg-error shadow-xl my-2">
-  <div class="card-body text-error-content">
-    <div class="grid grid-cols-3 items-center mb-4">
-      <div class="col-span-2 text-neutral-content">
-        <span class="text-xl leading-8">Error {action}</span>
-      </div>
-
-      <div class="flex justify-end">
-        <Icon type="warning" />
-      </div>
-    </div>
-    <p>{displayMessage}</p>
+<div role="alert" class="alert alert-error alert-soft my-2 items-start">
+  <Icon type="warning" />
+  <div>
+    <h3 class="font-semibold">Error {action}</h3>
+    <p class="text-sm break-words">{displayMessage}</p>
   </div>
 </div>

@@ -17,21 +17,13 @@
   const serviceStates = {};
 </script>
 
-<div class="flex flex-col md:flex-row gap-8 p-4 h-full overflow-y-auto">
-  <div class="hidden md:inline flex-grow" />
-  <div class="max-w-full md:max-w-lg md:flex-grow">
-    <DashboardCardList
-      contentType="app"
-      query={appsOverview}
-      states={appStates}
-    />
-  </div>
-  <div class="max-w-full md:max-w-lg md:flex-grow">
+<div class="h-full overflow-y-auto">
+  <div class="mx-auto max-w-6xl p-4 grid gap-8 md:grid-cols-2 items-start">
+    <DashboardCardList contentType="app" query={appsOverview} states={appStates} />
     <DashboardCardList
       contentType="service"
       query={servicesList}
       states={serviceStates}
     />
   </div>
-  <div class="hidden md:inline flex-grow" />
 </div>

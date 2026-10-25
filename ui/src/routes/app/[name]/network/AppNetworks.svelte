@@ -93,9 +93,9 @@
       {loading}
     />
 
-    <div class="divider max-w-xs" />
+    <div class="divider max-w-xs my-1"></div>
 
-    <div class="form-control w-full max-w-xs">
+    <div class="flex flex-col gap-2 w-full max-w-xs">
       <label class="label cursor-pointer">
         <span class="label-text">Bind All Interfaces</span>
         <input
@@ -109,7 +109,7 @@
         class="btn btn-primary"
         on:click={tryUpdateNetwork}
         class:hidden={bindAllInterfaces === reportBAI}
-        class:btn-loading
+        disabled={loading}
       >
         Update
       </button>
@@ -117,23 +117,22 @@
   </Card>
 
   <Card title="Custom TLD">
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Set Custom TLD</span>
-      </label>
+    <div class="flex flex-col gap-2 w-full max-w-xs">
+      <label class="input w-full max-w-xs">
+        <span class="label">Custom TLD</span>
       <input
         type="text"
-        class="input input-bordered w-full max-w-xs"
         placeholder="svc.local"
         bind:value={tld}
       />
+      </label>
     </div>
     <div slot="actions">
       <button
         class="btn btn-primary"
         on:click={tryUpdateNetwork}
         class:hidden={tld === reportTLD}
-        class:btn-loading
+        disabled={loading}
       >
         Update
       </button>

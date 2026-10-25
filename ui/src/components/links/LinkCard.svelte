@@ -31,10 +31,9 @@
 </script>
 
 <div
-  class="flex flex-row w-auto p-4 bg-neutral text-neutral-content items-center gap-3 rounded-lg"
-  class:bg-neutral-focus={!isLinked}
+  class="flex flex-row w-full sm:w-auto p-3 bg-base-200 border border-base-300 items-center gap-3 rounded-box"
 >
-  <a class="btn" class:gap-4={cardType === "service"} href={cardLink}>
+  <a class="btn btn-ghost" class:gap-4={cardType === "service"} href={cardLink}>
     <div class="">
       {#if cardType === "service"}<Icon type={serviceType} size="lg" />{/if}
     </div>
@@ -45,11 +44,12 @@
   <div class="flex-grow" />
   <div class:hidden={!isLinked}>
     <button
-      class="btn gap-2"
-      class:btn-loading
+      class="btn btn-outline btn-error gap-2"
+      disabled={loading}
       on:click={() => (unlinkModalOpen = true)}
     >
       {#if loading}
+        <span class="loading loading-spinner loading-xs"></span>
         Unlinking
       {:else}
         <Icon type="unlink" />
@@ -59,11 +59,12 @@
   </div>
   <div class:hidden={isLinked}>
     <button
-      class="btn gap-2"
-      class:btn-loading
+      class="btn btn-primary gap-2"
+      disabled={loading}
       on:click={() => (linkModalOpen = true)}
     >
       {#if loading}
+        <span class="loading loading-spinner loading-xs"></span>
         Linking
       {:else}
         <Icon type="link" size="lg" />

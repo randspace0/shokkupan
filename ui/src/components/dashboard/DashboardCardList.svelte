@@ -15,45 +15,42 @@
 </script>
 
 <QueryDataWrapper {query} action="loading {contentTypeTitle}s">
-  <div class="flex flex-row gap-4 p-2 items-center">
-    <span class="text-2xl font-bold text-base-content">{contentTypeTitle}s</span
-    >
-    <div class="flex-grow" />
-    <div class="flex justify-end" class:hidden={$query.data.length === 0}>
+  <section class="flex flex-col gap-3" aria-label="{contentTypeTitle}s">
+    <header class="flex items-center gap-3">
+      <h2 class="text-xl font-bold flex-1">
+        {contentTypeTitle}s
+        <span class="badge badge-neutral badge-sm align-middle ml-1"
+          >{$query.data.length}</span
+        >
+      </h2>
       <button
-        class="btn btn-secondary btn-sm gap-2"
+        class="btn btn-primary btn-sm gap-2 min-h-11 sm:min-h-8"
         on:click={() => goto(`/${contentType}/new`)}
       >
-        Create <Icon size="sm" type="plus" />
+        <Icon size="sm" type="plus" />
+        Create
       </button>
-    </div>
-  </div>
+    </header>
 
-  {#if $query.data.length > 0}
-    <div class="flex flex-col gap-4">
-      {#each $query.data as info}
-        <DashboardCard {contentType} {info} />
-      {/each}
-    </div>
-  {:else}
-    <div class="card card-bordered w-auto shadow-lg hover:shadow-xl bg-neutral">
-      <div class="card-body">
-        <div class="grid grid-cols-2 items-center">
-          <div class="h-full text-neutral-content">
-            <span class="text-xl leading-8">No {contentTypeTitle}s</span>
-          </div>
-        </div>
-
-        <div class="mt-4">
+    {#if $query.data.length > 0}
+      <div class="flex flex-col gap-2">
+        {#each $query.data as info}
+          <DashboardCard {contentType} {info} />
+        {/each}
+      </div>
+    {:else}
+      <div class="card card-border border-dashed bg-base-100">
+        <div class="card-body items-center text-center">
+          <p class="text-base-content/70">No {contentType}s yet.</p>
           <button
-            class="btn gap-2 btn-primary"
+            class="btn btn-primary gap-2"
             on:click={() => goto(`/${contentType}/new`)}
           >
             <Icon size="md" type="add" />
-            <span class="text-lg">Create {contentTypeTitle}</span>
+            Create {contentTypeTitle}
           </button>
         </div>
       </div>
-    </div>
-  {/if}
+    {/if}
+  </section>
 </QueryDataWrapper>

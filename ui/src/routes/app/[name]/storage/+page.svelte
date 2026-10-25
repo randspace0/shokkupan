@@ -58,7 +58,7 @@
     </div>
 
     <div slot="actions">
-      <button class="btn gap-2" on:click={() => (createModalOpen = true)}>
+      <button class="btn btn-primary gap-2" on:click={() => (createModalOpen = true)}>
         <Icon type="add" />
         New Storage Mount
       </button>

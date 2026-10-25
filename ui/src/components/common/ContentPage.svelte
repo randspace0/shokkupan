@@ -1,8 +1,8 @@
-<div class="card card-body py-3 px-3 h-full max-h-full text-base-content">
+<div class="py-3 px-3 sm:px-4 h-full max-h-full text-base-content">
   <div class="hidden sm:flex rounded-lg flex-row w-full max-h-full">
     <slot name="sidebar" />
 
-    <div class="pl-3 h-full w-full flex flex-col overflow-x-auto">
+    <div class="sm:pl-4 h-full w-full flex flex-col overflow-x-auto">
       <div class="w-full">
         <slot name="header" />
       </div>

@@ -3,12 +3,12 @@
   export let actionsRight = false;
 </script>
 
-<div class="card shadow-lg bg-base-200">
-  <div class="card-body p-4">
-    <h2 class="card-title">{title}</h2>
+<section class="card card-border bg-base-100 shadow-sm">
+  <div class="card-body p-4 gap-3">
+    {#if title}<h2 class="card-title text-base">{title}</h2>{/if}
     <slot />
     <div class="card-actions" class:justify-end={actionsRight}>
       <slot name="actions" />
     </div>
   </div>
-</div>
+</section>

@@ -17,27 +17,21 @@
   let confirmationModalOpen = false;
 </script>
 
-<div
-  class="flex flex-row items-center gap-2 w-auto shadow-lg bg-base-100 p-2 rounded-lg"
->
-  <div>
-    <a class="link link-hover" href={domainHref}
-      ><span class="text-lg">{domain}</span></a
-    >
-  </div>
-  <div class="flex-grow" />
-  <div class="">
-    <button
-      class="btn bg-base-100 hover:btn-error btn-sm btn-outline gap-2 btn-circle"
-      class:btn-loading
-      on:click={() => (confirmationModalOpen = true)}
-    >
-      {#if !loading}
-        <Icon type="delete" size="sm" />
-      {/if}
-    </button>
-  </div>
-</div>
+<li class="list-row items-center">
+  <a class="link link-hover list-col-grow text-lg" href={domainHref}>{domain}</a>
+  <button
+    class="btn btn-ghost btn-sm btn-circle text-error"
+    aria-label="Remove {domain}"
+    disabled={loading}
+    on:click={() => (confirmationModalOpen = true)}
+  >
+    {#if loading}
+      <span class="loading loading-spinner loading-xs"></span>
+    {:else}
+      <Icon type="delete" size="sm" />
+    {/if}
+  </button>
+</li>
 
 <ConfirmationModal
   name="remove-domain-modal"

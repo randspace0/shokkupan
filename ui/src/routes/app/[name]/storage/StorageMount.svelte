@@ -31,40 +31,31 @@
   };
 </script>
 
-<div class="flex flex-row gap-2">
-  <div class="flex items-center" class:flex-grow={!isDokkuManaged}>
-    <label class="input-group input-group-md" class:hidden={isDokkuManaged}>
-      <span class="w-auto">Mounted Path</span>
-      <input
-        type="text"
-        value={hostDir}
-        class="input input-md input-bordered"
-        disabled
-        class:flex-grow={!isDokkuManaged}
-      />
-    </label>
-    <div class="" class:hidden={!isDokkuManaged}>
-      <span class="font-bold">{hostDokkuDir}</span>
-    </div>
-  </div>
-
-  <div class="flex-grow">
-    <label class="input-group input-group-md">
-      <span>Container Path</span>
-      <input
-        type="text"
-        class="input input-md input-bordered w-auto flex-grow"
-        disabled
-        value={mountDir}
-      />
-    </label>
-  </div>
+<div class="flex flex-col md:flex-row md:items-center gap-2">
+  <label class="input w-full md:flex-1">
+    <span class="label">{isDokkuManaged ? "Dokku storage" : "Host path"}</span>
+    <input
+      type="text"
+      class="font-mono"
+      disabled
+      value={isDokkuManaged ? hostDokkuDir : hostDir}
+    />
+  </label>
+  <label class="input w-full md:flex-1">
+    <span class="label">Container path</span>
+    <input type="text" class="font-mono" disabled value={mountDir} />
+  </label>
   <button
-    class="btn btn-ghost btn-circle text-error-content ml-2"
-    class:btn-loading
+    class="btn btn-ghost btn-circle text-error self-end md:self-auto"
+    aria-label="Unmount {mountDir}"
+    disabled={loading}
     on:click={() => (confirmationModalOpen = true)}
   >
-    <Icon type="remove" />
+    {#if loading}
+      <span class="loading loading-spinner loading-xs"></span>
+    {:else}
+      <Icon type="remove" />
+    {/if}
   </button>
 </div>
 

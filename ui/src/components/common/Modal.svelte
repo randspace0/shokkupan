@@ -23,22 +23,21 @@
   class="modal modal-middle"
   class:modal-open={open}
   id={modalId}
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="{modalId}-title"
   on:click={checkCloseModal}
 >
-  <div class="modal-box p-6 w-auto max-w-full">
-    <div class="mb-4">
-      <div class="h-full text-base-content">
-        <span class="text-xl leading-7">{title}</span>
-      </div>
-      <button
-        class="btn btn-sm btn-circle absolute right-6 top-5"
-        class:btn-loading={preventClose}
-        for={modalId}
-        on:click={closeModal}
-      >
-        ✕
-      </button>
-    </div>
+  <div class="modal-box w-full max-w-lg">
+    <h3 id="{modalId}-title" class="text-lg font-bold mb-4 pr-8">{title}</h3>
+    <button
+      class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3"
+      aria-label="Close"
+      disabled={preventClose}
+      on:click={closeModal}
+    >
+      ✕
+    </button>
 
     <slot />
   </div>

@@ -41,7 +41,7 @@
   const removeDomain = ({ detail }) =>
     $removeDomainMutation.mutate(detail.domain);
 
-  let domains = ["bleh.com"];
+  let domains = [];
   $: if ($domainsReport.isSuccess && $domainsReport.data) {
     domains = $domainsReport.data["domains"] || [];
   }
@@ -50,17 +50,17 @@
 <QueryDataWrapper query={domainsReport} action="fetching domains">
   <Card title="Domains">
     {#if domains.length === 0}
-      <p>No domains configured</p>
+      <p class="text-base-content/70">No domains configured.</p>
     {:else}
-      <div class="flex flex-col gap-3 w-60">
-        {#each domains as domain, i}
+      <ul class="list rounded-box border border-base-300">
+        {#each domains as domain}
           <DomainListItem {domain} on:removeDomain={removeDomain} />
         {/each}
-      </div>
+      </ul>
     {/if}
 
     <div slot="actions">
-      <button class="btn gap-3" on:click={() => (addDomainModalOpen = true)}>
+      <button class="btn btn-primary gap-2" on:click={() => (addDomainModalOpen = true)}>
         Add Domain
         <Icon type="add" />
       </button>

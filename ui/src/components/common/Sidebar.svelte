@@ -21,8 +21,9 @@
   }
 </script>
 
-<div
-  class="menu rounded-box hidden sm:inline-block min-w-fit max-h-full bg-base-200 overflow-y-auto shadow-lg h-fit"
+<nav
+  aria-label="Section"
+  class="menu rounded-box hidden sm:block w-48 shrink-0 max-h-full bg-base-100 border border-base-300 overflow-y-auto h-fit"
 >
   {#each pages as info, i}
     <li class="">
@@ -31,10 +32,10 @@
       </a>
     </li>
   {/each}
-</div>
+</nav>
 
 <div class="inline-block sm:hidden w-full">
-  <div class="collapse collapse-arrow border border-base-300 w-full">
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
     <input type="checkbox" class="peer" bind:checked={openMobileMenu} />
     <div class="collapse-title text-xl font-medium peer-checked:bg-base-300">
       {pageLabel}
