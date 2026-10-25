@@ -15,6 +15,23 @@ type MonitoringEvent struct {
 }
 
 type GetMonitoringResponse struct {
-	Apps   []MonitoringApp   `json:"apps"`
-	Events []MonitoringEvent `json:"events"`
+	StatsAvailable bool              `json:"stats_available"`
+	Apps           []MonitoringApp   `json:"apps"`
+	Events         []MonitoringEvent `json:"events"`
+}
+
+type GetMonitoringStatsRequest struct {
+	App   string `query:"app" validate:"appName"`
+	Hours int    `query:"hours" validate:"omitempty,min=1,max=168"`
+}
+
+type MonitoringStatsPoint struct {
+	At       string  `json:"at"`
+	CPU      float64 `json:"cpu"`
+	MemBytes int64   `json:"mem_bytes"`
+	MemLimit int64   `json:"mem_limit"`
+}
+
+type GetMonitoringStatsResponse struct {
+	Points []MonitoringStatsPoint `json:"points"`
 }

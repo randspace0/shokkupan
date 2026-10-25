@@ -16,6 +16,7 @@ import (
 
 func RegisterRoutes(e *env.Env, g *echo.Group) {
 	g.GET("", e.H(GetMonitoring))
+	g.GET("/stats", e.H(GetMonitoringStats))
 }
 
 func GetMonitoring(e *env.Env, c echo.Context) error {
@@ -51,5 +52,43 @@ func GetMonitoring(e *env.Env, c echo.Context) error {
 		}
 	}
 
-	return c.JSON(http.StatusOK, dto.GetMonitoringResponse{Apps: apps, Events: events})
+	// a recent sample means the dokku-stats plugin is installed and working
+	var recent int64
+	e.DB.Model(&models.AppStatsSample{}).
+		Where("created_at > ?", time.Now().Add(-10*time.Minute)).Count(&recent)
+
+	return c.JSON(http.StatusOK, dto.GetMonitoringResponse{
+		StatsAvailable: recent > 0,
+		Apps:           apps,
+		Events:         events,
+	})
+}
+
+func GetMonitoringStats(e *env.Env, c echo.Context) error {
+	var req dto.GetMonitoringStatsRequest
+	if err := dto.BindRequest(c, &req); err != nil {
+		return err.ToHTTP()
+	}
+	if req.Hours == 0 {
+		req.Hours = 6
+	}
+
+	var rows []models.AppStatsSample
+	err := e.DB.Where("app_name = ? AND created_at > ?", req.App,
+		time.Now().Add(-time.Duration(req.Hours)*time.Hour)).
+		Order("created_at asc").Find(&rows).Error
+	if err != nil {
+		return fmt.Errorf("getting stats: %w", err)
+	}
+
+	points := make([]dto.MonitoringStatsPoint, len(rows))
+	for i, r := range rows {
+		points[i] = dto.MonitoringStatsPoint{
+			At:       r.CreatedAt.UTC().Format(time.RFC3339),
+			CPU:      r.CPU,
+			MemBytes: r.MemBytes,
+			MemLimit: r.MemLimit,
+		}
+	}
+	return c.JSON(http.StatusOK, dto.GetMonitoringStatsResponse{Points: points})
 }

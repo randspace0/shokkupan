@@ -10,12 +10,14 @@ import (
 	"gitlab.com/texm/shokku/internal/env"
 	"gitlab.com/texm/shokku/internal/models"
 	"gitlab.com/texm/shokku/internal/server/dokku"
+	"gitlab.com/texm/shokku/internal/stats"
 	"time"
 )
 
 const (
-	pollInterval = time.Minute
-	retention    = 30 * 24 * time.Hour
+	pollInterval   = time.Minute
+	retention      = 30 * 24 * time.Hour
+	statsRetention = 7 * 24 * time.Hour
 
 	colorDown = 0xE74C3C
 	colorUp   = 0x2ECC71
@@ -70,6 +72,36 @@ func alert(e *env.Env, c change) {
 	}
 }
 
+// collectStats stores one summed sample per app; it is a no-op until the
+// dokku-stats plugin is installed.
+func collectStats(e *env.Env) {
+	samples, err := stats.Report(e.Dokku.Exec, "")
+	if err != nil {
+		if !errors.Is(err, stats.ErrNotInstalled) {
+			log.Error().Err(err).Msg("monitor: failed to get stats")
+		}
+		return
+	}
+
+	perApp := map[string]*models.AppStatsSample{}
+	for _, s := range samples {
+		row, ok := perApp[s.App]
+		if !ok {
+			row = &models.AppStatsSample{AppName: s.App}
+			perApp[s.App] = row
+		}
+		row.CPU += s.CPU
+		row.MemBytes += s.MemBytes
+		row.MemLimit += s.MemLimit
+	}
+	for _, row := range perApp {
+		if err := e.DB.Create(row).Error; err != nil {
+			log.Error().Err(err).Msg("monitor: failed to record stats")
+		}
+	}
+	e.DB.Unscoped().Where("created_at < ?", time.Now().Add(-statsRetention)).Delete(&models.AppStatsSample{})
+}
+
 func poll(e *env.Env, prev map[string]bool) map[string]bool {
 	cur, err := snapshot(e)
 	if err != nil {
@@ -90,6 +122,7 @@ func poll(e *env.Env, prev map[string]bool) map[string]bool {
 	}
 
 	e.DB.Unscoped().Where("created_at < ?", time.Now().Add(-retention)).Delete(&models.AppStatusEvent{})
+	collectStats(e)
 	return cur
 }
 

@@ -27,3 +27,4 @@ curl -fsSL https://raw.githubusercontent.com/randspace0/shokkupan/main/plugins/i
 | Plugin | Used for |
 |---|---|
 | `discord` | Deploy notifications and monitoring alerts |
+| `stats` | CPU and memory charts on the Monitoring page |

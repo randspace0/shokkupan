@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+case "$1" in
+  help | stats:help)
+    cat<<HELP
+    stats:report [<app>], Print CPU and memory usage of running app containers (tab separated)
+HELP
+    ;;
+
+  *)
+    exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
+    ;;
+esac
