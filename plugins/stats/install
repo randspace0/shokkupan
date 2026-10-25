@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+chmod +x "$PLUGIN_DIR/commands" "$PLUGIN_DIR"/subcommands/*

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+cat<<HELP
+Usage: dokku stats[:COMMAND] [<app>]
+
+Commands:
+    stats:report [<app>]    Print CPU and memory usage of running app containers
+HELP

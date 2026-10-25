@@ -3,6 +3,7 @@
   import { useQuery } from "@sveltestack/svelte-query";
   import Card from "$common/Card.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
+  import AppStats from "$components/monitoring/AppStats.svelte";
 
   const monitoring = useQuery("getMonitoring", getMonitoring, {
     refetchInterval: 30000,
@@ -37,6 +38,22 @@
         </table>
       </div>
     </Card>
+
+    {#if $monitoring.data.stats_available}
+      {#each $monitoring.data.apps.filter((a) => a.is_running) as app}
+        <AppStats app={app.name} />
+      {/each}
+    {:else}
+      <Card title="CPU and memory">
+        <p>
+          Install the dokku-stats plugin to chart CPU and memory. On the server run:
+        </p>
+        <code class="block bg-base-300 p-2 rounded">
+          curl -fsSL https://raw.githubusercontent.com/randspace0/shokkupan/main/plugins/install.sh | sudo bash -s stats
+        </code>
+        <p>Samples appear after the next poll (up to a minute).</p>
+      </Card>
+    {/if}
 
     <Card title="Recent status changes (30 days)">
       {#if $monitoring.data.events.length === 0}

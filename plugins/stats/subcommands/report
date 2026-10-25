@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+# Output, one line per running app container:
+#   app <TAB> process-type <TAB> container-id <TAB> cpu% <TAB> "used / limit"
+stats_report_cmd() {
+  declare desc="Print CPU and memory usage of app containers"
+  declare cmd="stats:report"
+  [[ "$1" == "$cmd" ]] && shift 1
+
+  local APP="$1"
+  local FILTER="label=com.dokku.app-name"
+  if [[ -n "$APP" ]]; then
+    verify_app_name "$APP"
+    FILTER="$FILTER=$APP"
+  fi
+
+  local -A meta=()
+  local ids=() id app proc
+  while IFS=$'\t' read -r id app proc; do
+    [[ -z "$id" ]] && continue
+    meta[$id]="$app"$'\t'"$proc"
+    ids+=("$id")
+  done < <(docker ps --filter "$FILTER" --format '{{.ID}}	{{.Label "com.dokku.app-name"}}	{{.Label "com.dokku.process-type"}}')
+
+  [[ ${#ids[@]} -eq 0 ]] && return 0
+
+  local cpu mem
+  while IFS=$'\t' read -r id cpu mem; do
+    [[ -z "${meta[$id]}" ]] && continue
+    printf '%s\t%s\t%s\t%s\n' "${meta[$id]}" "$id" "$cpu" "$mem"
+  done < <(docker stats --no-stream --format '{{.ID}}	{{.CPUPerc}}	{{.MemUsage}}' "${ids[@]}")
+}
+
+stats_report_cmd "$@"
