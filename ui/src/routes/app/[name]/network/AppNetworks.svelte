@@ -109,7 +109,7 @@
         class="btn btn-primary"
         on:click={tryUpdateNetwork}
         class:hidden={bindAllInterfaces === reportBAI}
-        class:loading
+        class:btn-loading
       >
         Update
       </button>
@@ -133,7 +133,7 @@
         class="btn btn-primary"
         on:click={tryUpdateNetwork}
         class:hidden={tld === reportTLD}
-        class:loading
+        class:btn-loading
       >
         Update
       </button>
@@ -147,7 +147,7 @@
   {/if}
 
   <!--div class="mt-2">
-    <button class="btn btn-primary" on:click={tryUpdateNetwork} class:loading>
+    <button class="btn btn-primary" on:click={tryUpdateNetwork} class:btn-loading>
       Update
     </button>
   </div-->

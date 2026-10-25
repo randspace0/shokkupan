@@ -40,9 +40,9 @@
         Give this service a unique name:
       </span>
     </label>
-    <label class="input-group w-full flex">
-      <span class="w-fit">Name</span>
-      <input bind:value={name} class="input input-bordered flex-grow" />
+    <label class="input w-full">
+        <span class="label">Name</span>
+      <input bind:value={name} class="grow" />
     </label>
   </div>
 

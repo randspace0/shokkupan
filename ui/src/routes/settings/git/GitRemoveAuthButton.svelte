@@ -36,7 +36,7 @@
   <button
     class="btn btn-primary"
     on:click={$authMutation.mutate}
-    class:loading={$authMutation.isLoading}
+    class:btn-loading={$authMutation.isLoading}
   >
     Remove
   </button>

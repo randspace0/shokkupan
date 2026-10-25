@@ -26,7 +26,7 @@
 >
   {#each pages as info, i}
     <li class="">
-      <a href="{prefix}/{info.path}" class:active={info.path === currentPage}>
+      <a href="{prefix}/{info.path}" class:menu-active={info.path === currentPage}>
         <span>{info.name}</span>
       </a>
     </li>
@@ -45,7 +45,7 @@
           <li>
             <a
               href="{prefix}/{info.path}"
-              class:active={info.path === currentPage}
+              class:menu-active={info.path === currentPage}
             >
               <span>{info.name}</span>
             </a>

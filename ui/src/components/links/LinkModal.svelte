@@ -42,7 +42,7 @@
   <div class="mt-3">
     <button
       class="btn"
-      class:loading={preventClose}
+      class:btn-loading={preventClose}
       on:click={dispatchLinkService}
     >
       Submit

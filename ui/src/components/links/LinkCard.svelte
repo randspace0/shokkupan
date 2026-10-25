@@ -46,7 +46,7 @@
   <div class:hidden={!isLinked}>
     <button
       class="btn gap-2"
-      class:loading
+      class:btn-loading
       on:click={() => (unlinkModalOpen = true)}
     >
       {#if loading}
@@ -60,7 +60,7 @@
   <div class:hidden={isLinked}>
     <button
       class="btn gap-2"
-      class:loading
+      class:btn-loading
       on:click={() => (linkModalOpen = true)}
     >
       {#if loading}

@@ -5,7 +5,7 @@
   export let description;
 </script>
 
-<div class="card card-compact w-96 shadow-lg bg-base-100">
+<div class="card card-sm w-96 shadow-lg bg-base-100">
   <div class="card-body">
     <h2 class="card-title">{name}</h2>
     <span>Version {version}</span>

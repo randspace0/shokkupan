@@ -64,12 +64,11 @@
   </div>
 
   {#if updatingPhrase}
-    <label class="input-group w-full flex">
-      <span class="w-fit">Encryption Passphrase</span>
+    <label class="input w-full">
+        <span class="label">Encryption Passphrase</span>
       <input
         bind:value={newPhrase}
-        placeholder=""
-        class="input input-bordered flex-grow"
+        placeholder="" class="grow"
       />
     </label>
 

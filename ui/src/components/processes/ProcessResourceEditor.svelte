@@ -89,7 +89,7 @@
   <button
     class="btn btn-primary"
     class:btn-disabled={$setResourcesMutation.isError}
-    class:loading={$setResourcesMutation.isLoading}
+    class:btn-loading={$setResourcesMutation.isLoading}
     on:click={submit}
   >
     Save

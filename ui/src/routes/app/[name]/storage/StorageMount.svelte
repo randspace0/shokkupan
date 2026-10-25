@@ -61,7 +61,7 @@
   </div>
   <button
     class="btn btn-ghost btn-circle text-error-content ml-2"
-    class:loading
+    class:btn-loading
     on:click={() => (confirmationModalOpen = true)}
   >
     <Icon type="remove" />

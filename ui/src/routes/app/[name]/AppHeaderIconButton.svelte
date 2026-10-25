@@ -11,7 +11,7 @@
 <button
   class="btn btn-outline md:btn-sm"
   class:gap-2={!loading}
-  class:loading
+  class:btn-loading
   on:click={() => dispatch("clicked")}
 >
   {#if !loading}

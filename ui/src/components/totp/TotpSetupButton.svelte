@@ -56,7 +56,7 @@
 {/if}
 <button
   class="btn btn-primary"
-  class:loading={$genQuery.isLoading}
+  class:btn-loading={$genQuery.isLoading}
   class:btn-disabled={isSetup}
   class:bg-success={isSetup}
   class:text-success-content={isSetup}

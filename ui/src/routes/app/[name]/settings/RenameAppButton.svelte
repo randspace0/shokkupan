@@ -49,7 +49,7 @@
   <button
     class="btn btn-primary"
     on:click={() => $renameMutation.mutate(newName)}
-    class:loading={$renameMutation.isLoading}
+    class:btn-loading={$renameMutation.isLoading}
   >
     Save
   </button>

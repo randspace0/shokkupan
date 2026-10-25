@@ -13,7 +13,7 @@
 </script>
 
 <span class="text-lg">Choose a source:</span>
-<div class="tabs tabs-boxed bg-base-100 mt-4">
+<div class="tabs tabs-box bg-base-100 mt-4">
   {#each Object.keys(props.sources) as source}
     <a
       class="tab"

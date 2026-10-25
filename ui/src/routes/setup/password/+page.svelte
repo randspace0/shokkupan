@@ -37,26 +37,16 @@
 </script>
 
 <Card title="Create a user">
-  <label class="input-group">
-    <span>Username</span>
-    <input
-      type="text"
-      class="input input-bordered"
-      class:input-warning={!username}
-      bind:value={username}
-    />
+  <label class="input" class:input-warning={!username}>
+    <span class="label">Username</span>
+    <input type="text" bind:value={username} />
   </label>
 
   <span>Must be >8 characters</span>
 
-  <label class="input-group">
-    <span>Password</span>
-    <input
-      type="password"
-      class="input input-bordered"
-      class:input-warning={password.length < 8}
-      bind:value={password}
-    />
+  <label class="input" class:input-warning={password.length < 8}>
+    <span class="label">Password</span>
+    <input type="password" bind:value={password} />
   </label>
 
   <div class="form-control">

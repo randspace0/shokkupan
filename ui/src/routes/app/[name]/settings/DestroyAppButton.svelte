@@ -23,7 +23,7 @@
 <div class="">
   <button
     class="btn btn-error gap-2 w-56"
-    class:loading={$destroyAppMutation.isLoading}
+    class:btn-loading={$destroyAppMutation.isLoading}
     on:click={() => (confirmationModalOpen = true)}
   >
     {#if $destroyAppMutation.isLoading}

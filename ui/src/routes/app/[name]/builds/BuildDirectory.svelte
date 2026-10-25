@@ -69,7 +69,7 @@
     <div class="mt-4">
       <button
         class="btn btn-primary"
-        class:loading={$setDir.isLoading || $clearDir.isLoading}
+        class:btn-loading={$setDir.isLoading || $clearDir.isLoading}
         class:hidden={$getBuildDir.data === buildDir}
         on:click={() => $setDir.mutate(buildDir)}
       >

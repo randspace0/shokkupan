@@ -15,12 +15,11 @@
 </script>
 
 <div class="flex flex-col gap-2 mt-2">
-  <label class="input-group w-full flex">
-    <span class="w-fit">Backup Bucket</span>
+  <label class="input w-full">
+        <span class="label">Backup Bucket</span>
     <input
       bind:value={bucket}
-      placeholder="my-s3-bucket"
-      class="input input-bordered flex-grow"
+      placeholder="my-s3-bucket" class="grow"
       class:input-warning={savedBucket === ""}
     />
   </label>

@@ -73,7 +73,7 @@
   <div class="mt-4">
     <button
       class="btn"
-      class:loading={$addDomainMutation.isLoading}
+      class:btn-loading={$addDomainMutation.isLoading}
       on:click={$addDomainMutation.mutate}
     >
       Confirm
