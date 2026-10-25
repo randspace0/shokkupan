@@ -1,5 +1,5 @@
 <script>
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import { addGitAuth } from "$lib/api";
   import Error from "$common/Error.svelte";
 

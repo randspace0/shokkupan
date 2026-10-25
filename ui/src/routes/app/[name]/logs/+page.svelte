@@ -3,7 +3,7 @@
   import { getAppLogs } from "$lib/api";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import Logs from "$common/Logs.svelte";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import Card from "$common/Card.svelte";
 
   const appName = $page.params.name;

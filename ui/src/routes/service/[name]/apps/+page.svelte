@@ -15,7 +15,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import Cards from "$common/Cards.svelte";
   import Card from "$common/Card.svelte";
 

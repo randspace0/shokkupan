@@ -9,7 +9,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import Loader from "$common/Loader.svelte";
   import Error from "$common/Error.svelte";
   import AppNetworks from "./AppNetworks.svelte";

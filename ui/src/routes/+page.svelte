@@ -1,5 +1,5 @@
 <script>
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import { getAllAppsOverview, listServices } from "$lib/api";
 
   import DashboardCardList from "$components/dashboard/DashboardCardList.svelte";

@@ -5,7 +5,7 @@
   import { commandExecutionIds, appTheme } from "$lib/stores";
 
   import Header from "$components/Header.svelte";
-  import { QueryClient, QueryClientProvider } from "@sveltestack/svelte-query";
+  import { QueryCache, QueryClient, QueryClientProvider } from "$lib/query";
 
   import CommandExecutionWindow from "$components/commands/CommandExecutionWindow.svelte";
   import { goto } from "$app/navigation";
@@ -36,13 +36,14 @@
     err = JSON.parse(err.message);
     if (err.message === "setup key invalid") goto("/?invalidate_setup=1");
   };
-  const queryClient = new QueryClient();
-  queryClient.setDefaultOptions({
-    queries: {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      retry: 1,
-      onError: checkQueryError,
+  const queryClient = new QueryClient({
+    queryCache: new QueryCache({ onError: checkQueryError }),
+    defaultOptions: {
+      queries: {
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        retry: 1,
+      },
     },
   });
 </script>

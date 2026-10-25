@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import { getAppOverview } from "$lib/api";
-  import { useQuery, useQueryClient } from "@sveltestack/svelte-query";
+  import { useQuery, useQueryClient } from "$lib/query";
 
   import ContentPage from "$common/ContentPage.svelte";
   import Sidebar from "$common/Sidebar.svelte";

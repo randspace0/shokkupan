@@ -1,5 +1,5 @@
 <script>
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import { getVersions } from "$lib/api";
   import { appTheme } from "$lib/stores";
 

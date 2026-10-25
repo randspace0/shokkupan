@@ -2,7 +2,7 @@
   import { updateServiceBackupAuth } from "$lib/api";
   import { page } from "$app/stores";
   import Error from "$common/Error.svelte";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import Card from "$common/Card.svelte";
 
   export let setup = false;

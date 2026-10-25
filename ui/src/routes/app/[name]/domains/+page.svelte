@@ -4,7 +4,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import { addAppDomain, getAppDomainsReport, removeAppDomain } from "$lib/api";
 
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";

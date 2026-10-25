@@ -1,7 +1,7 @@
 <script>
   // TODO: delete this?
 
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import { setAppProcessDeployChecksState } from "$lib/api";
   import { page } from "$app/stores";
   import Error from "$common/Error.svelte";

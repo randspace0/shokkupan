@@ -4,7 +4,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import { getAppStorages, mountAppStorage, unmountAppStorage } from "$lib/api";
 
   import Icon from "$common/Icon.svelte";

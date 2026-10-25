@@ -4,7 +4,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import Error from "$common/Error.svelte";
   import { page } from "$app/stores";

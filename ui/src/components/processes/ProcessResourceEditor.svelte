@@ -3,7 +3,7 @@
 
   import { createEventDispatcher } from "svelte";
   import { page } from "$app/stores";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import Error from "$common/Error.svelte";
   import ProcessResource from "./ProcessResource.svelte";
 

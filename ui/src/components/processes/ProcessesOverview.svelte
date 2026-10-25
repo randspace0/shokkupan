@@ -8,7 +8,7 @@
   import Error from "$common/Error.svelte";
   import ProcessCard from "./ProcessCard.svelte";
   import { page } from "$app/stores";
-  import { useQuery, useQueryClient } from "@sveltestack/svelte-query";
+  import { useQuery, useQueryClient } from "$lib/query";
   import { createEventDispatcher } from "svelte";
 
   const appName = $page.params.name;

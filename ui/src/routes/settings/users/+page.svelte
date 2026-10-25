@@ -1,6 +1,6 @@
 <script>
   import { getUsers, getSSHKeys } from "$lib/api";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import SSHKey from "./SSHKey.svelte";
   import UserCard from "./UserCard.svelte";

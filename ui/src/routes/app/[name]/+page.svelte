@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { getAppOverview } from "$lib/api";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
 
   import Icon from "$common/Icon.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";

@@ -14,7 +14,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import { createEventDispatcher } from "svelte";
   import AppHeaderIconButton from "$src/routes/app/[name]/AppHeaderIconButton.svelte";
   import Icon from "$common/Icon.svelte";

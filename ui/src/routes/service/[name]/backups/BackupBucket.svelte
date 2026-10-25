@@ -1,6 +1,6 @@
 <script>
   import { page } from "$app/stores";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
 
   export let report = {};
 

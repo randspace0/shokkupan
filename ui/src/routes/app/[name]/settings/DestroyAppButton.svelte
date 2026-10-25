@@ -5,7 +5,7 @@
 
   import ConfirmationModal from "$common/ConfirmationModal.svelte";
   import Icon from "$common/Icon.svelte";
-  import { useMutation, useQueryClient } from "@sveltestack/svelte-query";
+  import { useMutation, useQueryClient } from "$lib/query";
   import Error from "$common/Error.svelte";
 
   const appName = $page.params.name;

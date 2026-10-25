@@ -1,7 +1,7 @@
 <script>
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
-  import { useQuery, useQueryClient } from "@sveltestack/svelte-query";
+  import { useQuery, useQueryClient } from "$lib/query";
   import { page } from "$app/stores";
   import { getServiceInfo } from "$lib/api";
 

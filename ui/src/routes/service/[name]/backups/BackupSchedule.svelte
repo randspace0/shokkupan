@@ -5,7 +5,7 @@
     unscheduleServiceBackups,
   } from "$lib/api";
   import Error from "$common/Error.svelte";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
 
   export let ready = false;
   export let schedule = "";

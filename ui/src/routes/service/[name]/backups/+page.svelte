@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import { getServiceBackupReport } from "$lib/api";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
 
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import Cards from "$common/Cards.svelte";

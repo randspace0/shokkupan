@@ -5,7 +5,7 @@
 
   import Modal from "$common/Modal.svelte";
   import Icon from "$common/Icon.svelte";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
 
   const appName = $page.params.name;
 

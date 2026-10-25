@@ -1,6 +1,6 @@
 <script>
   import { cloneService } from "$lib/api";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
