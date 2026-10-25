@@ -3,6 +3,7 @@
   import { createEventDispatcher } from "svelte";
 
   export let isAuthenticated = false;
+  export let username = "";
   export let showExecutionButton = false;
   export let executionWindowVisible = false;
 
@@ -40,6 +41,16 @@
   <div class="flex flex-col">
     <ul class="flex flex-col md:flex-row items-center gap-2 text-sm font-medium">
       {#if isAuthenticated}
+        {#if username}
+          <li class="flex items-center gap-2 px-3" title="Signed in as {username}">
+            <div class="avatar avatar-placeholder">
+              <div class="bg-primary text-primary-content w-8 rounded-full">
+                <span class="text-xs uppercase">{username.slice(0, 2)}</span>
+              </div>
+            </div>
+            <span class="font-semibold">{username}</span>
+          </li>
+        {/if}
         {#each authenticatedLinks as link}
           <li>
             <a class={linkStyle} href={link["href"]}>{link["text"]}</a>

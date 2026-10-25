@@ -58,6 +58,7 @@
       <div>
         <Header
           {isAuthenticated}
+          username={data.authDetails?.name ?? ""}
           {showExecutionButton}
           {executionWindowVisible}
           on:executionButtonClicked={toggleExecutionWindow}
