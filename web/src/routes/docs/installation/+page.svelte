@@ -1,9 +1,9 @@
 <script>
-	const bootstrapLink = "https://shokku.dev/bootstrap.sh";
+	const bootstrapLink = "https://raw.githubusercontent.com/randspace0/shokkupan/main/bootstrap.sh";
+	// piped, not saved: a downloaded bootstrap.sh collides with dokku's own installer file
 	const scriptInstallCommands = [
-	  `wget "${bootstrapLink}"`,
 		`export SHOKKU_LETSENCRYPT_EMAIL="foo@example.com"`,
-	  `bash bootstrap.sh`,
+		`curl -fsSL ${bootstrapLink} | sudo -E bash`,
 	];
 </script>
 
