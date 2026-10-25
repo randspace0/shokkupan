@@ -1,6 +1,6 @@
 <script>
   import { getMonitoring } from "$lib/api";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import Card from "$common/Card.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import AppStats from "$components/monitoring/AppStats.svelte";
