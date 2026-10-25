@@ -49,7 +49,7 @@
 </script>
 
 <svelte:head>
-  <title>shokku</title>
+  <title>shokkupan</title>
 </svelte:head>
 
 <div data-theme={$appTheme}>

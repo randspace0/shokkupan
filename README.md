@@ -1,4 +1,4 @@
-# shokku
+# shokkupan
 ![whaleboat logo](https://raw.githubusercontent.com/texm/shokku/main/web/static/images/whale-boat-sm.png)
 
 _(show-dokku)_

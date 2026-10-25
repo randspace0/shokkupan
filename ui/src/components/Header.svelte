@@ -22,7 +22,7 @@
 >
   <a
     class="hover:font-bold inline-flex items-center justify-center btn btn-ghost normal-case text-xl"
-    href="/">shokku</a
+    href="/">shokkupan</a
   >
 
   {#if showExecutionButton}

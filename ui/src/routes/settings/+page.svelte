@@ -29,7 +29,7 @@
       <div class="p-2 flex flex-col gap-4">
         <div class="stats shadow w-fit">
           <div class="stat">
-            <div class="stat-title">Shokku</div>
+            <div class="stat-title">Shokkupan</div>
             <div class="stat-value">{$versions.data["shokku"]}</div>
           </div>
         </div>
