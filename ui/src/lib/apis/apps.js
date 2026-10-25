@@ -285,3 +285,16 @@ export const clearAppBuildDirectory = async (appName) => {
 		.delete()
 		.res(res => res.ok);
 }
+
+export const getAppCron = async (appName) => {
+	return await appsClient.url("cron")
+		.query({"name": appName})
+		.get()
+		.json(res => res["tasks"]);
+}
+
+export const runAppCron = async (appName, id) => {
+	return await appsClient.url("cron/run")
+		.post({"name": appName, id})
+		.json(res => res["execution_id"]);
+}
