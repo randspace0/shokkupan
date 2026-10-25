@@ -86,3 +86,14 @@ export const removeGitAuth = async (host) => {
         .post({host})
         .res(res => res.ok);
 }
+export const getServerMonitoring = async () => {
+	return await settingsClient.url("server-monitoring")
+		.get()
+		.json(res => res["enabled"]);
+}
+
+export const setServerMonitoring = async (enabled) => {
+	return await settingsClient.url("server-monitoring")
+		.post({enabled})
+		.res(res => res.ok);
+}

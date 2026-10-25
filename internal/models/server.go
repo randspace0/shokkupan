@@ -12,6 +12,9 @@ type Server struct {
 	SetupKey   string
 	AuthMethod auth.Method
 	LastSync   time.Time
+
+	// ServerMonitoring turns on host CPU/memory/network sampling; off by default.
+	ServerMonitoring bool
 }
 
 func (Server) TableName() string {

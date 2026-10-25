@@ -10,6 +10,7 @@ import (
 	"gitlab.com/texm/shokku/internal/server/dokku"
 	"gitlab.com/texm/shokku/internal/server/middleware"
 	"gitlab.com/texm/shokku/internal/server/monitor"
+	"gitlab.com/texm/shokku/internal/server/sysmon"
 	"io/fs"
 	"time"
 )
@@ -72,6 +73,7 @@ func New(cfg Config, appFS fs.FS) (*env.Env, error) {
 
 	go commands.PollStatuses()
 	go monitor.Run(e)
+	go sysmon.Run(e)
 
 	return e, nil
 }

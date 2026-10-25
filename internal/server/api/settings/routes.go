@@ -23,6 +23,9 @@ func RegisterRoutes(e *env.Env, g *echo.Group) {
 	g.POST("/networks", e.H(CreateNetwork))
 	g.DELETE("/networks", e.H(DestroyNetwork))
 
+	g.GET("/server-monitoring", e.H(GetServerMonitoring))
+	g.POST("/server-monitoring", e.H(SetServerMonitoring))
+
 	g.GET("/plugins", e.H(ListPlugins))
 
 	g.GET("/registry", e.H(GetDockerRegistryReport))

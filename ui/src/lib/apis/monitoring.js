@@ -12,3 +12,10 @@ export const getMonitoringStats = async (app, hours = 6) => {
 		.get()
 		.json(res => res["points"]);
 }
+
+export const getServerSamples = async (hours = 6) => {
+	return await client.url("/server")
+		.query({hours})
+		.get()
+		.json(res => res["points"]);
+}

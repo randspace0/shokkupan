@@ -31,6 +31,7 @@ func Init(dsn string) (*gorm.DB, error) {
 		&models.AppSetupConfig{},
 		&models.AppStatusEvent{},
 		&models.AppStatsSample{},
+		&models.ServerSample{},
 	)
 	if err != nil {
 		return nil, err

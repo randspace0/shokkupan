@@ -1,6 +1,6 @@
 <script>
-  import { useQuery } from "$lib/query";
-  import { getVersions } from "$lib/api";
+  import { useQuery, useMutation, useQueryClient } from "$lib/query";
+  import { getVersions, getServerMonitoring, setServerMonitoring } from "$lib/api";
   import { appTheme } from "$lib/stores";
 
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
@@ -8,6 +8,12 @@
   import Cards from "$common/Cards.svelte";
 
   const versions = useQuery("getVersions", getVersions);
+
+  const serverMonitoring = useQuery("getServerMonitoring", getServerMonitoring);
+  const queryClient = useQueryClient();
+  const toggleMonitoring = useMutation(setServerMonitoring, {
+    onSuccess: () => queryClient.invalidateQueries("getServerMonitoring"),
+  });
 
   const themes = { auto: "auto", light: "corporate", dark: "business" };
   const themeSelected = (e) => appTheme.set(themes[e.target.value]);
@@ -22,6 +28,24 @@
         {/each}
       </select>
     </div>
+  </Card>
+
+  <Card title="Server monitoring">
+    <QueryDataWrapper query={serverMonitoring} action="getting monitoring setting">
+      <label class="label cursor-pointer justify-start gap-3 p-2">
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          checked={$serverMonitoring.data}
+          disabled={$toggleMonitoring.isLoading}
+          on:change={(e) => $toggleMonitoring.mutate(e.target.checked)}
+        />
+        <span>
+          Record server CPU, memory and network every 15s and log spikes.
+          Off by default.
+        </span>
+      </label>
+    </QueryDataWrapper>
   </Card>
 
   <Card title="Versions">

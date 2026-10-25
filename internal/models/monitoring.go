@@ -17,3 +17,13 @@ type AppStatsSample struct {
 	MemBytes int64
 	MemLimit int64
 }
+
+// ServerSample is one host-level reading. Net values are bytes/second since
+// the previous sample.
+type ServerSample struct {
+	gorm.Model
+	CPUPercent float64
+	MemPercent float64
+	NetRxBps   float64
+	NetTxBps   float64
+}

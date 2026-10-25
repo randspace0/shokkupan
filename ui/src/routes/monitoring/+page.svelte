@@ -1,16 +1,22 @@
 <script>
-  import { getMonitoring } from "$lib/api";
+  import { getMonitoring, getServerMonitoring } from "$lib/api";
   import { useQuery } from "$lib/query";
   import Card from "$common/Card.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import AppStats from "$components/monitoring/AppStats.svelte";
+  import ServerStats from "$components/monitoring/ServerStats.svelte";
 
   const monitoring = useQuery("getMonitoring", getMonitoring, {
     refetchInterval: 30000,
   });
+
+  const serverMonitoring = useQuery("getServerMonitoring", getServerMonitoring);
 </script>
 
 <div class="flex flex-col gap-4 p-4">
+  {#if $serverMonitoring.data}
+    <ServerStats />
+  {/if}
   <QueryDataWrapper query={monitoring} action="loading monitoring data">
     <Card title="Apps">
       <div class="overflow-x-auto">
