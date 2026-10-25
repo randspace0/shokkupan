@@ -266,7 +266,7 @@ type GetAppConfigResponse struct {
 }
 
 type SetAppConfigRequest struct {
-	Name string `json:"name" validate:"appName"`
+	Name   string            `json:"name" validate:"appName"`
 	Config map[string]string `json:"config"`
 }
 

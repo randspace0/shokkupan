@@ -59,7 +59,7 @@ func SyncUsersToDB(e *env.Env) error {
 			org := install.GetAccount().GetLogin()
 			temp_members, response, err = insClient.Organizations.ListMembers(ctx, org, options)
 			members = append(members, temp_members...)
-			
+
 			for response.NextPage != 0 {
 				options := &gh.ListMembersOptions{
 					ListOptions: gh.ListOptions{
