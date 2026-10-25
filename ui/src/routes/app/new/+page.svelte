@@ -40,7 +40,7 @@
         <button
           class="btn btn-primary"
           on:click={appCreationConfirmed}
-          class:loading={$createAppMutation.isLoading}
+          class:btn-loading={$createAppMutation.isLoading}
         >
           Create
         </button>

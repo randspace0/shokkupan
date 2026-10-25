@@ -128,7 +128,7 @@
   {#if stateDirty && showSaveButton}
     <button
       class="btn btn-primary mt-2 gap-2"
-      class:loading={saving}
+      class:btn-loading={saving}
       on:click={() => dispatch("save", varsList)}
     >
       Save

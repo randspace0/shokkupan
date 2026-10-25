@@ -55,11 +55,11 @@
   class="bg-neutral rounded-lg shadow-lg border-info border-2 text-neutral-content w-full h-fit min-h-16 p-2"
 >
   <div class="flex flex-row items-center">
-    <ul class="menu menu-compact menu-horizontal items-center rounded-box p-1">
+    <ul class="menu menu-sm menu-horizontal items-center rounded-box p-1">
       {#each Object.keys(executions) as id}
         <li>
           <a
-            class:active={id === selectedId}
+            class:menu-active={id === selectedId}
             on:click={() => (selectedId = id)}
           >
             {$executionIdDescriptions[id]}

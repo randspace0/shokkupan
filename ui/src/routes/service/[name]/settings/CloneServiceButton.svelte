@@ -55,7 +55,7 @@
   <button
     class="btn btn-primary"
     on:click={() => $cloneMutation.mutate(newName)}
-    class:loading={$cloneMutation.isLoading}
+    class:btn-loading={$cloneMutation.isLoading}
   >
     Save
   </button>

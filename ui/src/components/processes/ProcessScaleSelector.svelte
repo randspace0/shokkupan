@@ -43,7 +43,7 @@
   <div class="items-center flex flex-row gap-2">
     <span class="text-lg">Scale: </span>
     {#if $setScaleMutation.isLoading}
-      <button class="btn btn-square btn-sm loading" />
+      <button class="btn btn-square btn-sm btn-loading" />
     {:else}
       <button
         class="btn btn-square btn-sm"

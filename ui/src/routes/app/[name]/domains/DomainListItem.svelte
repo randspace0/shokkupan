@@ -29,7 +29,7 @@
   <div class="">
     <button
       class="btn bg-base-100 hover:btn-error btn-sm btn-outline gap-2 btn-circle"
-      class:loading
+      class:btn-loading
       on:click={() => (confirmationModalOpen = true)}
     >
       {#if !loading}

@@ -54,17 +54,16 @@
 <div class="w-auto mt-2">
   <div class="flex flex-col gap-2">
     {#if managingAuth}
-      <label class="input-group w-full flex">
-        <span class="w-fit">Access Key ID</span>
+      <label class="input w-full">
+        <span class="label">Access Key ID</span>
         <input
-          bind:value={accessKeyId}
-          class="input input-bordered flex-grow"
+          bind:value={accessKeyId} class="grow"
         />
       </label>
 
-      <label class="input-group w-full flex">
-        <span class="w-fit">Secret Access Key</span>
-        <input bind:value={secretKey} class="input input-bordered flex-grow" />
+      <label class="input w-full">
+        <span class="label">Secret Access Key</span>
+        <input bind:value={secretKey} class="grow" />
       </label>
 
       <label class="label cursor-pointer w-52">
@@ -73,28 +72,25 @@
       </label>
 
       {#if showOptional}
-        <label class="input-group w-full flex">
-          <span class="w-fit">Region</span>
+        <label class="input w-full">
+        <span class="label">Region</span>
           <input
             bind:value={region}
-            placeholder="us-east-1"
-            class="input input-bordered flex-grow"
+            placeholder="us-east-1" class="grow"
           />
         </label>
-        <label class="input-group w-full flex">
-          <span class="w-fit">Signature version</span>
+        <label class="input w-full">
+        <span class="label">Signature version</span>
           <input
             bind:value={signatureVersion}
-            placeholder="s3v4"
-            class="input input-bordered flex-grow"
+            placeholder="s3v4" class="grow"
           />
         </label>
-        <label class="input-group w-full flex">
-          <span class="w-fit">Endpoint URL</span>
+        <label class="input w-full">
+        <span class="label">Endpoint URL</span>
           <input
             bind:value={endpointURL}
-            placeholder="https://YOURMINIOSERVICE"
-            class="input input-bordered flex-grow"
+            placeholder="https://YOURMINIOSERVICE" class="grow"
           />
         </label>
       {/if}

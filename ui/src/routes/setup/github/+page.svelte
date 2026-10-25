@@ -49,13 +49,9 @@
     </div>
 
     {#if useOrganization}
-      <label class="input-group">
-        <span class="text-neutral">Organization Name</span>
-        <input
-          type="text"
-          class="input input-bordered"
-          bind:value={organization}
-        />
+      <label class="input">
+        <span class="label text-neutral">Organization Name</span>
+        <input type="text" bind:value={organization} />
       </label>
     {/if}
   </div>

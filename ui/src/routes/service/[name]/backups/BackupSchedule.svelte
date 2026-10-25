@@ -48,12 +48,11 @@
       />
     </label>
     {#if enableSchedule}
-      <label class="input-group w-full flex">
-        <span class="w-fit">Crontab Schedule</span>
+      <label class="input w-full">
+        <span class="label">Crontab Schedule</span>
         <input
           bind:value={newSchedule}
-          placeholder="0 3 * * *"
-          class="input input-bordered flex-grow"
+          placeholder="0 3 * * *" class="grow"
         />
       </label>
 

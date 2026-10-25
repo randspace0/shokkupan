@@ -46,7 +46,7 @@
       <button
         class="btn btn-outline btn-sm"
         class:gap-2={!loading}
-        class:loading
+        class:btn-loading
         on:click={$stopMutation.mutate}
       >
         {#if !loading}
@@ -57,7 +57,7 @@
       <button
         class="btn btn-outline btn-sm"
         class:gap-2={!loading}
-        class:loading
+        class:btn-loading
         on:click={$restartMutation.mutate}
       >
         {#if !loading}
@@ -69,7 +69,7 @@
       <button
         class="btn btn-outline btn-sm"
         class:gap-2={!loading}
-        class:loading
+        class:btn-loading
         on:click={$startMutation.mutate}
       >
         {#if !loading}

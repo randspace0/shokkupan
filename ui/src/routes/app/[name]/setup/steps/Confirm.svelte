@@ -22,7 +22,7 @@
   with configuration</span
 >
 <div class="overflow-x-auto mt-3">
-  <table class="table table-compact w-full">
+  <table class="table table-sm w-full">
     <thead>
       <tr><th>Key</th><th>Value</th></tr>
     </thead>

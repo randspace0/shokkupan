@@ -32,19 +32,17 @@
     <label class="label" class:hidden={!labelText}>
       <span class="label-text text-neutral-content">{labelText}</span>
     </label>
-    <label class="input-group w-full flex">
-      <span class="w-fit">{inputText}</span>
+    <label class="input w-full">
+        <span class="label">{inputText}</span>
       {#if type === "number"}
         <input
           bind:value
-          type="number"
-          class="input input-bordered flex-grow"
+          type="number" class="grow"
           on:change={onChange}
         />
       {:else}
         <input
-          bind:value
-          class="input input-bordered flex-grow"
+          bind:value class="grow"
           on:change={onChange}
         />
       {/if}

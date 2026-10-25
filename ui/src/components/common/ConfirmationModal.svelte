@@ -42,12 +42,12 @@
     {/if}
   </div>
 
-  <button class="btn btn-primary" class:loading={doingAction} on:click={accept}
+  <button class="btn btn-primary" class:btn-loading={doingAction} on:click={accept}
     >Yes</button
   >
   <button
     class="btn btn-secondary btn-ghost"
-    class:loading={doingAction}
+    class:btn-loading={doingAction}
     on:click={close}>No</button
   >
 </Modal>

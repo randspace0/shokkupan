@@ -65,7 +65,7 @@
   <button
     class="btn btn-primary"
     on:click={$registryAuthMutation.mutate}
-    class:loading={$registryAuthMutation.isLoading}
+    class:btn-loading={$registryAuthMutation.isLoading}
   >
     Save
   </button>

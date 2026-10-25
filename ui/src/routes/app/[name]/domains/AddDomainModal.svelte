@@ -32,7 +32,7 @@
   </div>
 
   <div class="mt-4">
-    <button class="btn" class:loading on:click={signalAddDomain}>
+    <button class="btn" class:btn-loading on:click={signalAddDomain}>
       Confirm
     </button>
   </div>

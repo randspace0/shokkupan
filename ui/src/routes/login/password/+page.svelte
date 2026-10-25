@@ -80,7 +80,7 @@
       <Error action="logging in" {error} />
     {/if}
 
-    <button class="btn btn-primary" class:loading on:click={tryLogin}>
+    <button class="btn btn-primary" class:btn-loading on:click={tryLogin}>
       Submit
     </button>
   </div>
