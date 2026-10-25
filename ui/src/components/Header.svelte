@@ -11,23 +11,24 @@
     { href: "/settings", text: "Settings" },
     { href: "/logout", text: "Logout" },
   ];
-  const linkStyle = "px-3 py-2 btn btn-ghost";
+  const linkStyle = "px-3 py-2 btn btn-ghost min-h-11 focus-visible:outline-2 focus-visible:outline-offset-2";
 
   const dispatch = createEventDispatcher();
   const executionButtonClicked = () => dispatch("executionButtonClicked");
 </script>
 
 <nav
-  class="bg-neutral text-neutral-content flex flex-col md:flex-row items-center w-full justify-between p-4 mx-auto"
+  aria-label="Main"
+  class="bg-neutral text-neutral-content flex flex-col md:flex-row items-center w-full justify-between gap-2 p-4 mx-auto"
 >
   <a
-    class="hover:font-bold inline-flex items-center justify-center btn btn-ghost normal-case text-xl"
+    class="inline-flex items-center justify-center btn btn-ghost normal-case text-xl min-h-11 focus-visible:outline-2 focus-visible:outline-offset-2"
     href="/">shokkupan</a
   >
 
   {#if showExecutionButton}
     <button
-            class="btn gap-2 hover:btn-secondary"
+            class="btn gap-2 min-h-11 hover:btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2"
             class:btn-active={executionWindowVisible}
             on:click={executionButtonClicked}
     >
@@ -37,7 +38,7 @@
   {/if}
 
   <div class="flex flex-col">
-    <ul class="flex flex-col md:flex-row items-center space-x-2 text-sm font-medium">
+    <ul class="flex flex-col md:flex-row items-center gap-2 text-sm font-medium">
       {#if isAuthenticated}
         {#each authenticatedLinks as link}
           <li>

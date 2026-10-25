@@ -54,7 +54,7 @@
 
 <div data-theme={$appTheme}>
   <QueryClientProvider client={queryClient}>
-    <div class="flex flex-col h-screen w-screen max-w-screen max-h-screen">
+    <div class="flex flex-col h-dvh w-full max-h-dvh">
       <div>
         <Header
           {isAuthenticated}
@@ -65,14 +65,14 @@
       </div>
 
       <div class="flex flex-grow min-h-0 h-full">
-        <div class="flex-grow w-full min-h-0 h-full max-h-screen">
+        <div class="flex-grow w-full min-h-0 h-full max-h-dvh">
           <slot />
         </div>
       </div>
     </div>
 
     <div
-      class="absolute z-50 top-24 px-8 w-full"
+      class="absolute z-50 top-24 px-4 md:px-8 w-full"
       class:hidden={!executionWindowVisible}
     >
       <CommandExecutionWindow

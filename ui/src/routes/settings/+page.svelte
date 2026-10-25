@@ -40,6 +40,16 @@
             <div class="stat-value">{$versions.data["dokku"]}</div>
           </div>
         </div>
+        <p class="text-sm text-base-content/70 max-w-prose">
+          Shokkupan is a fork of
+          <a
+            class="link link-primary"
+            href="https://github.com/texm/shokku"
+            target="_blank"
+            rel="noreferrer">shokku</a
+          >
+          by texm, licensed under AGPL.
+        </p>
       </div>
     </QueryDataWrapper>
   </Card>
