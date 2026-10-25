@@ -65,7 +65,7 @@
   }
 </script>
 
-<div class="w-full min-h-16 flex flex-row bg-base-200 p-4 items-center rounded-lg">
+<div class="w-full min-h-16 flex flex-row bg-base-100 border border-base-300 shadow-sm p-4 items-center rounded-3xl">
   <div class="flex flex-row items-center">
     {#if appDomain}
       <a href="http://{appDomain}" class="link link-hover" target="_blank">

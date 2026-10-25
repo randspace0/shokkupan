@@ -39,7 +39,7 @@
         {/each}
       </div>
     {:else}
-      <div class="card card-border border-dashed bg-base-100">
+      <div class="card card-border border-dashed bg-base-100 rounded-3xl">
         <div class="card-body items-center text-center">
           <p class="text-base-content/70">No {contentType}s yet.</p>
           <button

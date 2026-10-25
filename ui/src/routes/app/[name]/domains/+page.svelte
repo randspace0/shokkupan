@@ -52,7 +52,7 @@
     {#if domains.length === 0}
       <p class="text-base-content/70">No domains configured.</p>
     {:else}
-      <ul class="list rounded-box border border-base-300">
+      <ul class="list rounded-2xl border border-base-300 bg-base-100">
         {#each domains as domain}
           <DomainListItem {domain} on:removeDomain={removeDomain} />
         {/each}

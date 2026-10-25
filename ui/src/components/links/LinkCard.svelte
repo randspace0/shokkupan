@@ -31,7 +31,7 @@
 </script>
 
 <div
-  class="flex flex-row w-full sm:w-auto p-3 bg-base-200 border border-base-300 items-center gap-3 rounded-box"
+  class="flex flex-row w-full sm:w-auto p-3 bg-base-200 border border-base-300 items-center gap-3 rounded-2xl"
 >
   <a class="btn btn-ghost" class:gap-4={cardType === "service"} href={cardLink}>
     <div class="">

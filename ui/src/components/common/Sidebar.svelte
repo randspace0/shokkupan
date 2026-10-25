@@ -23,7 +23,7 @@
 
 <nav
   aria-label="Section"
-  class="menu rounded-box hidden sm:block w-48 shrink-0 max-h-full bg-base-100 border border-base-300 overflow-y-auto h-fit"
+  class="menu rounded-3xl p-2 gap-1 hidden sm:block w-52 shrink-0 max-h-full bg-base-100 border border-base-300 shadow-sm overflow-y-auto h-fit"
 >
   {#each pages as info, i}
     <li class="">

@@ -54,7 +54,7 @@
 
 <div data-theme={$appTheme}>
   <QueryClientProvider client={queryClient}>
-    <div class="flex flex-col h-dvh w-full max-h-dvh">
+    <div class="flex flex-col h-dvh w-full bg-base-200 max-h-dvh">
       <div>
         <Header
           {isAuthenticated}

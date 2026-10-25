@@ -20,7 +20,7 @@
 
 <nav
   aria-label="Main"
-  class="bg-neutral text-neutral-content border-b border-neutral-content/10 flex flex-col md:flex-row items-center w-full justify-between gap-2 p-4 mx-auto"
+  class="bg-base-100/80 backdrop-blur text-base-content border border-base-300 shadow-sm rounded-3xl flex flex-col md:flex-row items-center justify-between gap-2 px-4 py-2 mx-3 mt-3"
 >
   <a
     class="inline-flex items-center justify-center gap-2 btn btn-ghost normal-case text-xl min-h-11 focus-visible:outline-2 focus-visible:outline-offset-2"

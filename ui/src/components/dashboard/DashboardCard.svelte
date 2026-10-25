@@ -16,7 +16,7 @@
 
 <a
   href="/{contentType}/{info.name}"
-  class="card card-border bg-base-100 hover:border-primary hover:shadow-md transition-shadow focus-visible:outline-2 focus-visible:outline-primary"
+  class="card card-border bg-base-100 rounded-3xl hover:border-primary/60 hover:shadow-lg hover:-translate-y-0.5 transition motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-primary"
 >
   <div class="card-body flex-row items-center gap-3 p-4">
     {#if info.type}

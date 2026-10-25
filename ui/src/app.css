@@ -81,3 +81,46 @@
 		transform: rotate(360deg);
 	}
 }
+
+/* softer, rounder shape language across every daisyUI theme */
+[data-theme],
+:root {
+	--radius-selector: 9999px;
+	--radius-field: 0.875rem;
+	--radius-box: 1.25rem;
+	--border: 1px;
+}
+
+.card {
+	border-radius: 1.25rem;
+}
+
+.card-border {
+	border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+}
+
+.btn {
+	border-radius: 9999px;
+}
+
+.btn-circle {
+	border-radius: 9999px;
+}
+
+.input,
+.select,
+.textarea {
+	border-radius: 0.875rem;
+}
+
+.modal-box {
+	border-radius: 1.5rem;
+}
+
+.alert {
+	border-radius: 1rem;
+}
+
+body {
+	background: var(--color-base-200);
+}
