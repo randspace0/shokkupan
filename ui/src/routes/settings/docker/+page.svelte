@@ -1,5 +1,5 @@
 <script>
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import { getDockerRegistryReport } from "$lib/api";
 
   import Card from "$common/Card.svelte";

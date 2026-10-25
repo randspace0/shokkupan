@@ -1,7 +1,7 @@
 <script>
   import { getPlugins } from "$lib/api";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import Plugin from "./Plugin.svelte";
   import Card from "$common/Card.svelte";
 

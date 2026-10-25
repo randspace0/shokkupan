@@ -1,7 +1,7 @@
 <script>
   import { verifySetupKeyValid } from "$lib/api";
   import { setSetupKey } from "$lib/auth";
-  import { useQuery, useQueryClient } from "@sveltestack/svelte-query";
+  import { useQuery, useQueryClient } from "$lib/query";
 
   import Icon from "$common/Icon.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";

@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import { getAppConfig, setAppConfig } from "$lib/api";
-  import { useQuery, useMutation } from "@sveltestack/svelte-query";
+  import { useQuery, useMutation } from "$lib/query";
 
   import Error from "$common/Error.svelte";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";

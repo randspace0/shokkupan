@@ -10,7 +10,7 @@
     useMutation,
     useQuery,
     useQueryClient,
-  } from "@sveltestack/svelte-query";
+  } from "$lib/query";
   import Card from "$common/Card.svelte";
 
   const queryClient = useQueryClient();

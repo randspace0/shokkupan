@@ -3,7 +3,7 @@
   import { createEventDispatcher, getContext } from "svelte";
   import Icon from "$common/Icon.svelte";
   import { startService, stopService, restartService } from "$lib/api";
-  import { useMutation, useQueryClient } from "@sveltestack/svelte-query";
+  import { useMutation, useQueryClient } from "$lib/query";
 
   export let serviceType;
 

@@ -1,7 +1,7 @@
 <script>
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import { page } from "$app/stores";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import { getAppSetupConfig } from "$lib/api";
 
   const appName = $page.params.name;

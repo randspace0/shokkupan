@@ -1,6 +1,6 @@
 <script>
   import { page } from "$app/stores";
-  import { useMutation, useQuery } from "@sveltestack/svelte-query";
+  import { useMutation, useQuery } from "$lib/query";
   import { getAppDeployChecksReport, setAppDeployChecksState } from "$lib/api";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
 

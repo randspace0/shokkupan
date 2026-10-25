@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import { createStoredState } from "$lib/auth";
   import { getGithubAuthInfo } from "$lib/api";
   import { page } from "$app/stores";

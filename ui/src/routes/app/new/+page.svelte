@@ -1,5 +1,5 @@
 <script>
-  import { useMutation, useQueryClient } from "@sveltestack/svelte-query";
+  import { useMutation, useQueryClient } from "$lib/query";
   import { createApp } from "$lib/api";
   import { goto } from "$app/navigation";
   import Error from "$common/Error.svelte";

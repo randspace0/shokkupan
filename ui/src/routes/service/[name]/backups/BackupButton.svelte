@@ -3,7 +3,7 @@
   import { doServiceBackup } from "$lib/api";
   import Error from "$common/Error.svelte";
   import { commandExecutionIds, executionIdDescriptions } from "$lib/stores";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
 
   export let ready = false;
 

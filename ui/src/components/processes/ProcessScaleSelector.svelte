@@ -3,7 +3,7 @@
   import { setAppProcessScale } from "$lib/api";
   import { commandExecutionIds, executionIdDescriptions } from "$lib/stores";
   import { createEventDispatcher } from "svelte";
-  import { useMutation, useQueryClient } from "@sveltestack/svelte-query";
+  import { useMutation, useQueryClient } from "$lib/query";
 
   export let processName;
   export let scale;

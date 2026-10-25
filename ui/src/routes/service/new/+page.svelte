@@ -1,5 +1,5 @@
 <script>
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import { createService } from "$lib/api";
   import { goto } from "$app/navigation";
 

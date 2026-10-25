@@ -3,7 +3,7 @@
   import { confirmPasswordSetup } from "$lib/api";
   import Card from "$common/Card.svelte";
   import TotpSetupButton from "$components/totp/TotpSetupButton.svelte";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
 
   let username = "admin";
   let password = "";

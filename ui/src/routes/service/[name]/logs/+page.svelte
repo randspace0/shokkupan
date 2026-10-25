@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import { getServiceLogs } from "$lib/api";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import Logs from "$common/Logs.svelte";
   import Card from "$common/Card.svelte";

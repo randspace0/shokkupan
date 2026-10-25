@@ -5,7 +5,7 @@
   import Icon from "$common/Icon.svelte";
   import ConfirmationModal from "$common/ConfirmationModal.svelte";
   import Alert from "$common/Alert.svelte";
-  import { useMutation } from "@sveltestack/svelte-query";
+  import { useMutation } from "$lib/query";
   import Error from "../../../components/common/Error.svelte";
 
   export let domain;

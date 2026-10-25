@@ -1,6 +1,6 @@
 <script>
   import Modal from "$common/Modal.svelte";
-  import { useQuery } from "@sveltestack/svelte-query";
+  import { useQuery } from "$lib/query";
   import { requestGenerateTotp, confirmTotpCode } from "$lib/apis/setup.js";
   import Error from "$common/Error.svelte";
   import Icon from "$common/Icon.svelte";
