@@ -9,6 +9,7 @@ import (
 	"gitlab.com/texm/shokku/internal/server/db"
 	"gitlab.com/texm/shokku/internal/server/dokku"
 	"gitlab.com/texm/shokku/internal/server/middleware"
+	"gitlab.com/texm/shokku/internal/server/monitor"
 	"io/fs"
 	"time"
 )
@@ -70,6 +71,7 @@ func New(cfg Config, appFS fs.FS) (*env.Env, error) {
 	dokku.SyncState(e)
 
 	go commands.PollStatuses()
+	go monitor.Run(e)
 
 	return e, nil
 }

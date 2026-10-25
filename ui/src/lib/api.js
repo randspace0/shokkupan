@@ -5,3 +5,4 @@ export * from "./apis/settings.js";
 export * from "./apis/exec.js";
 export * from "./apis/setup.js";
 export * from "./apis/notifications.js";
+export * from "./apis/monitoring.js";
