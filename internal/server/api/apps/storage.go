@@ -8,6 +8,7 @@ import (
 	"gitlab.com/texm/shokku/internal/env"
 	"gitlab.com/texm/shokku/internal/server/dto"
 	"net/http"
+	"regexp"
 )
 
 func isMountInSlice(mount dokku.StorageBindMount, mounts []dokku.StorageBindMount) bool {
@@ -56,15 +57,20 @@ func GetAppStorage(e *env.Env, c echo.Context) error {
 	})
 }
 
+// dokkuStorageRegex matches a Dokku storage directory (/var/lib/dokku/data/storage/<name>).
+// Anything else is a docker volume name or an absolute host path and is passed
+// through to dokku, which validates it.
+var dokkuStorageRegex = regexp.MustCompile(`^/var/lib/dokku/data/storage/(\w{2,})$`)
+
 func MountAppStorage(e *env.Env, c echo.Context) error {
 	var req dto.AlterAppStorageRequest
 	if err := dto.BindRequest(c, &req); err != nil {
 		return err.ToHTTP()
 	}
 
-	if req.StorageType == "New Storage" {
-		// TODO: actually chown properly
-		err := e.Dokku.EnsureStorageDirectory(req.Name, dokku.StorageChownOptionHerokuish)
+	// Ensure the storage directory exists when it is a Dokku storage path
+	if matches := dokkuStorageRegex.FindStringSubmatch(req.HostDir); matches != nil {
+		err := e.Dokku.EnsureStorageDirectory(matches[1], dokku.StorageChownOptionHerokuish)
 		if err != nil {
 			return fmt.Errorf("ensuring app storage dir: %w", err)
 		}
