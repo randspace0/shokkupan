@@ -10,6 +10,7 @@ import (
 	"gorm.io/gorm"
 
 	"gitlab.com/texm/shokku/internal/models"
+	"gitlab.com/texm/shokku/internal/randstr"
 	"gitlab.com/texm/shokku/internal/server/db"
 )
 
@@ -20,7 +21,7 @@ func Bootstrap() error {
 	}
 
 	var s models.ServerSecrets
-	s.SigningKey = []byte(generateRandomString(32))
+	s.SigningKey = []byte(randstr.String(32))
 
 	svDb, dbErr := db.Init(cfg.DBPath)
 	if dbErr != nil {

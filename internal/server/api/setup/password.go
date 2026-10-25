@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"github.com/rs/zerolog/log"
 	"gitlab.com/texm/shokku/internal/models"
+	"gitlab.com/texm/shokku/internal/randstr"
 	"gitlab.com/texm/shokku/internal/server/auth"
 	"image/png"
-	"math/rand"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -16,16 +16,6 @@ import (
 	"gitlab.com/texm/shokku/internal/env"
 	"gitlab.com/texm/shokku/internal/server/dto"
 )
-
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-func generateRandomString(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-	return string(b)
-}
 
 func GenerateTotp(e *env.Env, c echo.Context) error {
 	key, err := totp.Generate(totp.GenerateOpts{
@@ -47,7 +37,7 @@ func GenerateTotp(e *env.Env, c echo.Context) error {
 	return c.JSON(http.StatusOK, dto.GenerateTotpResponse{
 		Secret:       key.Secret(),
 		Image:        base64.StdEncoding.EncodeToString(imgBuf.Bytes()),
-		RecoveryCode: generateRandomString(12),
+		RecoveryCode: randstr.String(12),
 	})
 }
 
