@@ -34,7 +34,7 @@
     {#if !$status.data.installed}
       <p>The dokku-discord plugin is not installed. On the server run:</p>
       <code class="block bg-base-300 p-2 rounded">
-        sudo dokku plugin:install https://github.com/randspace0/dokku-discord.git discord
+        curl -fsSL https://raw.githubusercontent.com/randspace0/shokkupan/main/plugins/install.sh | sudo bash -s discord
       </code>
     {:else}
       {#if $status.data.configured}

@@ -1,5 +1,5 @@
 // Package discord drives the dokku-discord plugin
-// (https://github.com/randspace0/dokku-discord) and posts alerts to its webhook.
+// (plugins/discord) and posts alerts to its webhook.
 package discord
 
 import (

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+discord_get_cmd() {
+  declare desc="Get Discord webhook URL"
+  declare cmd="discord:get"
+  [[ "$1" == "$cmd" ]] && shift 1
+
+  local APP="$1"
+  local DOKKU_ROOT="${DOKKU_ROOT:-/home/dokku}"
+  local WEBHOOK_URL=""
+
+  if [[ -n "$APP" ]]; then
+    verify_app_name "$APP"
+    local CONFIG_PATH="$DOKKU_ROOT/$APP/DISCORD_URL"
+
+    if [[ -f "$CONFIG_PATH" ]]; then
+      WEBHOOK_URL=$(cat "$CONFIG_PATH")
+    else
+      # Fallback to global config
+      local GLOBAL_PATH="$DOKKU_ROOT/.discord/DISCORD_URL"
+      if [[ -f "$GLOBAL_PATH" ]]; then
+        WEBHOOK_URL=$(cat "$GLOBAL_PATH")
+      fi
+    fi
+
+    if [[ -n "$WEBHOOK_URL" ]]; then
+      echo "$WEBHOOK_URL"
+    else
+      dokku_log_fail "No Discord webhook URL configured for app $APP"
+    fi
+  else
+    # Get global webhook
+    local CONFIG_PATH="$DOKKU_ROOT/.discord/DISCORD_URL"
+
+    if [[ -f "$CONFIG_PATH" ]]; then
+      cat "$CONFIG_PATH"
+    else
+      dokku_log_fail "No Discord webhook URL configured globally"
+    fi
+  fi
+}
+
+discord_get_cmd "$@"
