@@ -1,0 +1,107 @@
+# Plan: Dokku Pro feature parity and a Nuxt rewrite of the UI
+
+Goal: shokkupan matches the feature set of [Dokku Pro](https://pro.dokku.com/) and its UI is rewritten from SvelteKit to Nuxt, styled with Tailwind CSS and daisyUI only.
+
+This file is a working plan. Update each stage's **Status** as work lands, and delete the file when every stage is complete.
+
+## How this plan was made
+
+- Feature list: the Dokku Pro marketing page plus the labels visible in its public demo (`pro.dokku.com/demo`), and the feature list from the maintainer below.
+- Only text labels and structure were read from the demo, to learn what screens exist. Its code, styles and assets are proprietary and must not be copied. Everything here is built from scratch.
+- "Today" below is from reading this repo and the open PRs. Anything marked *verify* is a belief that Stage 1 must confirm before work is estimated.
+
+## Target feature set
+
+### Apps
+| Area | Detail | Today |
+|---|---|---|
+| Navbar actions | Visit, restart, rebuild, sync from git, stop, start | Exists in the Svelte `AppHeader`. *Verify* "sync from git" maps to `setup/sync-repo`. |
+| Overview | Created at, updated at, git sha, deploy locked? | `GET /apps/info` has created_at and is_locked. Updated at and git sha: *verify*, likely missing. |
+| Domains | Add, remove, enable and disable | Exists. |
+| TLS | Let's Encrypt on or off per app | Exists (`/apps/letsencrypt`). Custom certs: not present. |
+| Processes | Scale, resources, deploy checks | Exists. |
+| Environment variables | View as rows or as a raw `.env` text | Rows exist. `.env` view and bulk edit are new UI. |
+| Logs | Live tail, with filtering | Logs page exists. Filtering is new. |
+| Settings | Rename, delete (double confirmation) | Exist. Double confirmation is new. |
+| Settings | HTTP auth | Missing. Needs a Dokku plugin (see Stage 4). |
+| Settings | GitHub webhook setup | Partly exists (`api/github.go`, `/github/events`). *Verify* the flow. |
+| Settings | Linked services | Exists (`/apps/services`). |
+| Also open | Notifications (#2), monitoring and charts (#4, #5), cron (#3) | New pages in open PRs, to be ported to Nuxt. |
+
+### Services
+| Area | Detail | Today |
+|---|---|---|
+| Overview | Status, docker image, internal IP, data dir, config dir, exposed ports, service dir | *Verify* which fields the service API returns. |
+| Logs | Live tail, as for apps | Exists. |
+| Settings | Linked apps, link and unlink | Exists in part. |
+| Create | Datastore type, image, version, config options, custom env | Exists in part. *Verify*. |
+
+### Dokku Pro features not on the list above
+These are in Dokku Pro. Decide in Stage 1 whether they are in scope; they are planned in Stage 4.
+- Long-lived **API tokens** for scripting the JSON API (the API exists today, but only browser sessions can use it).
+- **Users, teams and per-app access** (today: GitHub or password login, no roles).
+- **Audit trail**: every command run on a user's behalf, with target, outcome, time and output.
+- **Password reset links** and SSH key management per user (SSH keys exist in settings).
+- **HTTP(S) git push** for deploying from behind a firewall.
+
+## Architecture decisions
+
+- **Nuxt in SPA mode** (`ssr: false`), built with `nuxt generate` to static files that the Go binary embeds, as `ui/dist` is embedded today. No Node server in production, so the Docker image and `bootstrap.sh` stay as they are.
+- **Tailwind CSS + daisyUI only.** No other component library. Light and dark themes through daisyUI themes.
+- **Typed API client.** Hand-written composables over `$fetch` (CSRF header, cookie auth as today), with response types that mirror `internal/server/dto`. Evaluate generating them from an OpenAPI spec in Stage 1; keep it only if it is cheap to maintain.
+- **Live output.** Logs and command execution use whatever the Go server offers today (polling `/exec/status`). Move to SSE or WebSocket only if polling is the bottleneck.
+- **Strangler rewrite.** The new app lives in `ui-next/` beside `ui/`. The Go server keeps serving `ui/` until Stage 5, so nothing regresses and each stage can merge independently. Verify the current Nuxt release and its Tailwind and daisyUI integration in the official docs at the start of Stage 1, instead of pinning versions here.
+- Backend additions follow the repo's conventions: handlers in `internal/server/api/<area>`, DTOs in `internal/server/dto`, tests next to the code, a bash plugin under `plugins/` when Dokku itself must do the work.
+
+## Stages
+
+### Stage 1: Foundation and audit
+**Goal**: A Nuxt app that builds, embeds, logs in and renders the app list, plus a confirmed gap list.
+**Success Criteria**:
+- `ui-next/` builds with `nuxt generate`; CI builds it.
+- Login (GitHub and password, including TOTP) works against the real API, with CSRF handled.
+- App shell: navbar, sidebar, theme switch, error and loading components.
+- The *verify* items above are resolved and the tables updated with real answers.
+- Decision recorded on OpenAPI types vs hand-written types, and on which Pro extras (above) are in scope.
+**Tests**: component tests for the shell with Vitest; a Playwright smoke test (login, list apps) against the Go server with the mock Dokku client; `go test ./...` unchanged.
+**Status**: Not Started
+
+### Stage 2: Apps parity
+**Goal**: Every app screen from the table above works in Nuxt.
+**Success Criteria**:
+- Navbar actions with live command output.
+- Overview (including updated at and git sha, adding them to `GET /apps/info` if missing), domains, TLS, processes, environment (rows and `.env` views), logs with filtering, settings with double-confirmed delete, GitHub webhook, linked services.
+- The Notifications, Cron and Monitoring pages from #2, #3, #4 and #5, once those PRs have merged.
+**Tests**: Playwright flows per screen; Go handler tests for any new endpoint fields; log filter unit tests.
+**Status**: Not Started
+
+### Stage 3: Services parity
+**Goal**: Every service screen from the table above works in Nuxt.
+**Success Criteria**: service list and create flow (type, image, version, options, env); overview with all listed fields (extend the service API where it is short); logs; linked apps with link and unlink; existing backup pages ported.
+**Tests**: Playwright flows; Go tests for new service-info fields.
+**Status**: Not Started
+
+### Stage 4: Dokku Pro extras
+**Goal**: The features that make shokkupan comparable to Pro beyond the screens above. Each is its own PR and can be dropped without blocking Stage 5.
+**Success Criteria**:
+1. **API tokens**: table, `Authorization: Bearer` support, create and revoke UI, `curl` documentation.
+2. **HTTP auth** per app: `plugins/http-auth` (Dokku has no core command for it), settings UI, install through `plugins/install.sh`.
+3. **Users and teams**: admin and member roles, per-app and per-service grants, enforced in middleware on every `/api/apps` and `/api/services` route, with tests for denial.
+4. **Audit trail**: record each command run through `commands.RequestExecution` with user, target, outcome, time and output; per-user view visible to that user and admins.
+5. **HTTPS git push**: smart-HTTP endpoint authenticated with an API token, forwarding to Dokku. Highest risk; needs a real Dokku host to test.
+**Tests**: Go unit tests for each; permission-denial tests for teams; plugin scripts get `bash -n` in CI and a manual host checklist in the PR.
+**Status**: Not Started
+
+### Stage 5: Cutover
+**Goal**: Nuxt is the only UI.
+**Success Criteria**: `ui/` removed; `ui-next/` renamed to `ui/`; Dockerfile and `.github/workflows` updated; README and screenshots refreshed; release notes call out the UI change.
+**Tests**: full Playwright suite green; image builds; manual upgrade from the previous release on a real host.
+**Status**: Not Started
+
+## Risks and open questions
+
+- **Scope.** This is a full UI rewrite plus a permissions system. Stage 4 item 3 touches every route; ship it last and behind tests.
+- **Open PRs.** #2 to #5 add Svelte pages that Stage 2 must port. Merge them first, or accept porting them during Stage 2.
+- **No live host.** Nothing here has been run against a real Dokku server. Plugin and Dokku-output assumptions need a staging host before release.
+- **Licensing.** The upstream project is AGPL; keep `LICENSE` and attribution.
+- **Questions for the maintainer**: which Stage 4 items are required for "on par"? Is dropping the Svelte UI acceptable before every Stage 4 item lands? Preferred test host for Stage 4 item 5?
