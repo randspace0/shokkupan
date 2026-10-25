@@ -68,6 +68,9 @@ func ListServices(e *env.Env, c echo.Context) error {
 
 	for _, serviceType := range serviceTypes {
 		services, err := getServiceList(e, serviceType)
+		if err != nil && strings.Contains(err.Error(), "is not a dokku command") {
+			continue // plugin not installed
+		}
 		if err != nil {
 			return fmt.Errorf("getting list for %s services: %w", serviceType, err)
 		}

@@ -43,6 +43,9 @@ func GetAppServices(e *env.Env, c echo.Context) error {
 
 	for _, serviceType := range serviceTypes {
 		links, err := getAppServiceLinks(e, req.Name, serviceType)
+		if err != nil && strings.Contains(err.Error(), "is not a dokku command") {
+			continue // plugin not installed
+		}
 		if err != nil {
 			return fmt.Errorf("getting links for " + serviceType)
 		}

@@ -73,40 +73,105 @@
     };
   };
 
+  let rawMode = false;
+  let rawText = "";
+  const quote = (v) => (/[\s#"'$\\]/.test(v) ? JSON.stringify(v) : v);
+  const toRaw = () =>
+    varsList.map(([k, v]) => `${k}=${quote(v)}`).join("\n");
+  const unquote = (v) => {
+    v = v.trim();
+    if (v.startsWith('"') && v.endsWith('"') && v.length > 1) {
+      try {
+        return JSON.parse(v);
+      } catch {
+        return v.slice(1, -1);
+      }
+    }
+    if (v.startsWith("'") && v.endsWith("'") && v.length > 1)
+      return v.slice(1, -1);
+    return v;
+  };
+  const parseRaw = (text) => {
+    const parsed = [];
+    for (const line of text.split("\n")) {
+      const m = line.match(/^\s*(?:export\s+)?([^#=\s][^=]*?)\s*=(.*)$/);
+      if (m) parsed.push([m[1], unquote(m[2])]);
+    }
+    return parsed;
+  };
+  const toggleRaw = () => {
+    rawMode = !rawMode;
+    if (rawMode) rawText = toRaw();
+  };
+  const rawChanged = (e) => {
+    rawText = e.target.value;
+    varsList = parseRaw(rawText);
+    checkStateDirty();
+    dispatch("changed", varsList);
+  };
+
   const keyChanged = pairChange(0);
   const valChanged = pairChange(1);
 </script>
 
-<div class="w-full grid grid-cols-2 gap-2 mb-2">
+<div class="join mb-3" role="tablist" aria-label="Editor mode">
+  <button
+    role="tab"
+    aria-selected={!rawMode}
+    class="btn btn-sm join-item"
+    class:btn-active={!rawMode}
+    on:click={() => rawMode && toggleRaw()}>Table</button
+  >
+  <button
+    role="tab"
+    aria-selected={rawMode}
+    class="btn btn-sm join-item"
+    class:btn-active={rawMode}
+    on:click={() => !rawMode && toggleRaw()}>.env</button
+  >
+</div>
+
+{#if rawMode}
+  <textarea
+    aria-label="Environment variables in .env format"
+    class="textarea textarea-bordered w-full font-mono text-sm min-h-64 mb-2"
+    spellcheck="false"
+    placeholder="KEY=value"
+    value={rawText}
+    on:input={rawChanged}
+  ></textarea>
+{:else}
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
   {#each varsList as pair, i}
     <div>
-      <label class="input-group input-group-md">
-        <span>Key</span>
+      <label class="input input-bordered w-full">
+        <span class="label">Key</span>
         <input
           type="text"
           on:change={keyChanged}
           data-index={i}
           value={pair[0]}
-          class="input input-md input-bordered w-full"
+          class="font-mono"
         />
       </label>
     </div>
 
     <div class="flex flex-row">
       <div class="flex-grow">
-        <label class="input-group input-group-md">
-          <span>Value</span>
+        <label class="input input-bordered w-full">
+          <span class="label">Value</span>
           <input
             type="text"
             on:change={valChanged}
             data-index={i}
             value={pair[1]}
-            class="input input-md input-bordered w-full"
+            class="font-mono"
           />
         </label>
       </div>
       <button
         class="btn btn-ghost btn-circle text-error ml-2"
+        aria-label="Remove {pair[0] || 'variable'}"
         on:click={confirmRemoveKey(i)}
       >
         <Icon type="remove" />
@@ -114,6 +179,7 @@
     </div>
   {/each}
 </div>
+{/if}
 
 <div class="">
   <button
@@ -128,7 +194,7 @@
   {#if stateDirty && showSaveButton}
     <button
       class="btn btn-primary mt-2 gap-2"
-      class:btn-loading={saving}
+      disabled={saving}
       on:click={() => dispatch("save", varsList)}
     >
       Save
