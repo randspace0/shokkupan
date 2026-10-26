@@ -19,47 +19,41 @@
   {/if}
   <QueryDataWrapper query={monitoring} action="loading monitoring data">
     <Card title="Apps">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr><th>App</th><th>Status</th><th>Processes</th></tr>
-          </thead>
-          <tbody>
-            {#each $monitoring.data.apps as app}
-              <tr>
-                <td><a class="link" href={`/app/${app.name}`}>{app.name}</a></td>
-                <td>
-                  {#if !app.is_deployed}
-                    <span class="badge">not deployed</span>
-                  {:else if app.is_running}
-                    <span class="badge badge-success">running</span>
-                  {:else}
-                    <span class="badge badge-error">stopped</span>
-                  {/if}
-                </td>
-                <td>{app.num_processes}</td>
-              </tr>
-            {/each}
-          </tbody>
-        </table>
+      <div class="flex flex-col gap-4">
+        {#each $monitoring.data.apps as app}
+          <div class="rounded-2xl border border-base-300 p-4 flex flex-col gap-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <a class="link link-hover font-semibold text-lg" href={`/app/${app.name}`}>{app.name}</a>
+              {#if !app.is_deployed}
+                <span class="badge badge-ghost">not deployed</span>
+              {:else if app.is_running}
+                <span class="badge badge-soft badge-success">running</span>
+              {:else}
+                <span class="badge badge-soft badge-error">stopped</span>
+              {/if}
+              <span class="text-sm text-base-content/70">
+                {app.num_processes} process{app.num_processes === 1 ? "" : "es"}
+              </span>
+            </div>
+            {#if app.is_running && $monitoring.data.stats_available}
+              <AppStats app={app.name} />
+            {/if}
+          </div>
+        {/each}
+
+        {#if !$monitoring.data.stats_available}
+          <div class="alert alert-info alert-soft items-start">
+            <div>
+              <p>Install the stats plugin to chart CPU and memory per app. On the server run:</p>
+              <code class="block bg-base-300 p-2 rounded-xl mt-2 text-xs break-all">
+                curl -fsSL https://raw.githubusercontent.com/randspace0/shokkupan/main/plugins/install.sh | sudo bash -s stats
+              </code>
+              <p class="mt-2">Samples appear after the next poll (up to a minute).</p>
+            </div>
+          </div>
+        {/if}
       </div>
     </Card>
-
-    {#if $monitoring.data.stats_available}
-      {#each $monitoring.data.apps.filter((a) => a.is_running) as app}
-        <AppStats app={app.name} />
-      {/each}
-    {:else}
-      <Card title="CPU and memory">
-        <p>
-          Install the dokku-stats plugin to chart CPU and memory. On the server run:
-        </p>
-        <code class="block bg-base-300 p-2 rounded">
-          curl -fsSL https://raw.githubusercontent.com/randspace0/shokkupan/main/plugins/install.sh | sudo bash -s stats
-        </code>
-        <p>Samples appear after the next poll (up to a minute).</p>
-      </Card>
-    {/if}
 
     <Card title="Recent status changes (30 days)">
       {#if $monitoring.data.events.length === 0}
