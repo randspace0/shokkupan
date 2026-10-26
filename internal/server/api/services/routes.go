@@ -24,6 +24,7 @@ func RegisterRoutes(e *env.Env, g *echo.Group) {
 
 	backups := g.Group("/backups")
 	backups.GET("/report", e.H(GetServiceBackupReport))
+	backups.GET("/download", e.H(DownloadServiceDump))
 	backups.POST("/auth", e.H(SetServiceBackupAuth))
 	backups.POST("/bucket", e.H(SetServiceBackupBucket))
 	backups.POST("/run", e.H(RunServiceBackup))
