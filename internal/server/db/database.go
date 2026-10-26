@@ -2,7 +2,7 @@ package db
 
 import (
 	"github.com/glebarez/sqlite"
-	"gitlab.com/texm/shokku/internal/models"
+	"github.com/randspace0/shokkupan/internal/models"
 	"gorm.io/gorm"
 )
 

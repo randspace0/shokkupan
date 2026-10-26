@@ -3,8 +3,8 @@ package env
 import (
 	"github.com/glebarez/sqlite"
 	"github.com/labstack/echo/v4"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/texm/dokku-go"
-	"gitlab.com/texm/shokku/internal/server/dto"
 	"gorm.io/gorm"
 )
 

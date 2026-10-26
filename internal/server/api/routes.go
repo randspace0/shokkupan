@@ -2,14 +2,14 @@ package api
 
 import (
 	"github.com/labstack/echo/v4"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/server/api/apps"
-	"gitlab.com/texm/shokku/internal/server/api/auth"
-	"gitlab.com/texm/shokku/internal/server/api/monitoring"
-	"gitlab.com/texm/shokku/internal/server/api/notifications"
-	"gitlab.com/texm/shokku/internal/server/api/services"
-	"gitlab.com/texm/shokku/internal/server/api/settings"
-	"gitlab.com/texm/shokku/internal/server/api/setup"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/server/api/apps"
+	"github.com/randspace0/shokkupan/internal/server/api/auth"
+	"github.com/randspace0/shokkupan/internal/server/api/monitoring"
+	"github.com/randspace0/shokkupan/internal/server/api/notifications"
+	"github.com/randspace0/shokkupan/internal/server/api/services"
+	"github.com/randspace0/shokkupan/internal/server/api/settings"
+	"github.com/randspace0/shokkupan/internal/server/api/setup"
 )
 
 func RegisterRoutes(e *env.Env, authMiddleware []echo.MiddlewareFunc) {

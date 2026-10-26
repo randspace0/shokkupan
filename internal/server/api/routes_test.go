@@ -3,9 +3,9 @@ package api
 import (
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/server/dto"
 	"net/http"
 	"net/http/httptest"
 	"net/url"

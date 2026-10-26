@@ -2,9 +2,9 @@ package server
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/randspace0/shokkupan/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/server/middleware"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/server/dto"
-	"gitlab.com/texm/shokku/internal/server/middleware"
 	"io/fs"
 	"net/http"
 )

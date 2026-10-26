@@ -3,9 +3,9 @@ package github
 import (
 	"context"
 	gh "github.com/google/go-github/v48/github"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
 	"golang.org/x/oauth2"
 	ghOAuth "golang.org/x/oauth2/github"
 )

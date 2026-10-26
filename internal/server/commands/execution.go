@@ -1,9 +1,9 @@
 package commands
 
 import (
+	"github.com/randspace0/shokkupan/internal/randstr"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/texm/dokku-go"
-	"gitlab.com/texm/shokku/internal/randstr"
-	"gitlab.com/texm/shokku/internal/server/dto"
 	"time"
 )
 

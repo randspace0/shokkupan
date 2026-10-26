@@ -2,9 +2,9 @@ package settings
 
 import (
 	"fmt"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
-	"gitlab.com/texm/shokku/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"net/http"
 
 	"github.com/labstack/echo/v4"

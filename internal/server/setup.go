@@ -2,12 +2,12 @@ package server
 
 import (
 	"fmt"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
+	"github.com/randspace0/shokkupan/internal/randstr"
+	"github.com/randspace0/shokkupan/internal/server/auth"
+	"github.com/randspace0/shokkupan/internal/server/github"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
-	"gitlab.com/texm/shokku/internal/randstr"
-	"gitlab.com/texm/shokku/internal/server/auth"
-	"gitlab.com/texm/shokku/internal/server/github"
 	"time"
 )
 

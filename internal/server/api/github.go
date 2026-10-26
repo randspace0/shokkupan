@@ -3,9 +3,9 @@ package api
 import (
 	"github.com/google/go-github/v48/github"
 	"github.com/labstack/echo/v4"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
 	"net/http"
 )
 

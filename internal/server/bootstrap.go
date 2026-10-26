@@ -9,9 +9,9 @@ import (
 	"golang.org/x/crypto/ssh"
 	"gorm.io/gorm"
 
-	"gitlab.com/texm/shokku/internal/models"
-	"gitlab.com/texm/shokku/internal/randstr"
-	"gitlab.com/texm/shokku/internal/server/db"
+	"github.com/randspace0/shokkupan/internal/models"
+	"github.com/randspace0/shokkupan/internal/randstr"
+	"github.com/randspace0/shokkupan/internal/server/db"
 )
 
 func Bootstrap() error {

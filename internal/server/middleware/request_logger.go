@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"fmt"
-	"gitlab.com/texm/shokku/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"strings"
 	"time"
 

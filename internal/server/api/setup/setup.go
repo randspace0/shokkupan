@@ -3,11 +3,11 @@ package setup
 import (
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
+	"github.com/randspace0/shokkupan/internal/server/auth"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
-	"gitlab.com/texm/shokku/internal/server/auth"
-	"gitlab.com/texm/shokku/internal/server/dto"
 	"net/http"
 )
 

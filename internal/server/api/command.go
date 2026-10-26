@@ -3,9 +3,9 @@ package api
 import (
 	"errors"
 	"github.com/labstack/echo/v4"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/server/commands"
-	"gitlab.com/texm/shokku/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/server/commands"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"net/http"
 )
 
