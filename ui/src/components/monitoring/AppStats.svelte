@@ -1,7 +1,6 @@
 <script>
   import { getMonitoringStats } from "$lib/api";
   import { useQuery } from "$lib/query";
-  import Card from "$common/Card.svelte";
   import Error from "$common/Error.svelte";
   import Sparkline from "./Sparkline.svelte";
 
@@ -15,26 +14,28 @@
 
   let points;
   $: points = $stats.data || [];
+  let times;
+  $: times = points.map((p) => p.at);
 </script>
 
-<Card title={app}>
-  {#if $stats.isError}
-    <Error action="loading stats" error={$stats.error} />
-  {:else if points.length === 0}
-    <p>No samples yet.</p>
-  {:else}
-    <div class="grid gap-4 md:grid-cols-2">
-      <Sparkline
-        label="CPU (last 6h)"
-        values={points.map((p) => p.cpu)}
-        format={(v) => `${v.toFixed(1)}%`}
-      />
-      <Sparkline
-        label="Memory (last 6h)"
-        values={points.map((p) => p.mem_bytes)}
-        max={points[points.length - 1].mem_limit}
-        format={mib}
-      />
-    </div>
-  {/if}
-</Card>
+{#if $stats.isError}
+  <Error action="loading stats" error={$stats.error} />
+{:else if points.length === 0}
+  <p class="text-sm text-base-content/70">No samples yet.</p>
+{:else}
+  <div class="grid gap-4 md:grid-cols-2">
+    <Sparkline
+      label="CPU (last 6h)"
+      {times}
+      values={points.map((p) => p.cpu)}
+      format={(v) => `${v.toFixed(1)}%`}
+    />
+    <Sparkline
+      label="Memory (last 6h)"
+      {times}
+      values={points.map((p) => p.mem_bytes)}
+      max={points[points.length - 1].mem_limit}
+      format={mib}
+    />
+  </div>
+{/if}

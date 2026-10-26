@@ -6,6 +6,7 @@ import (
 	"github.com/randspace0/shokkupan/internal/env"
 	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/randspace0/shokkupan/internal/server/commands"
+	shokkudokku "github.com/randspace0/shokkupan/internal/server/dokku"
 	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/rs/zerolog/log"
 	"net/http"
@@ -54,7 +55,7 @@ func GetAppsList(e *env.Env, c echo.Context) error {
 }
 
 func GetAppsProcessReport(e *env.Env, c echo.Context) error {
-	allReports, err := e.Dokku.GetAllProcessReport()
+	allReports, err := shokkudokku.GetProcessReports(e)
 	if err != nil {
 		return fmt.Errorf("failed to get apps report: %w", err)
 	}

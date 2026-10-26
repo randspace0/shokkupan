@@ -23,7 +23,7 @@ func RegisterRoutes(e *env.Env, g *echo.Group) {
 
 func GetMonitoring(e *env.Env, c echo.Context) error {
 	apps := []dto.MonitoringApp{}
-	reports, err := e.Dokku.GetAllProcessReport()
+	reports, err := dokku.GetProcessReports(e)
 	if err != nil && !errors.Is(err, dokkugo.NoDeployedAppsError) {
 		return fmt.Errorf("getting process report: %w", err)
 	}

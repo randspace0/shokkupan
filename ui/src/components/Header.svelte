@@ -20,7 +20,7 @@
 
 <nav
   aria-label="Main"
-  class="bg-base-100/80 backdrop-blur text-base-content border border-base-300 shadow-sm rounded-3xl flex flex-col md:flex-row items-center justify-between gap-2 px-4 py-2 mx-3 mt-3"
+  class="bg-base-100/80 backdrop-blur text-base-content border border-base-300 shadow-sm rounded-3xl flex flex-wrap items-center gap-2 px-4 py-2 mx-3 mt-3"
 >
   <a
     class="inline-flex items-center justify-center gap-2 btn btn-ghost normal-case text-xl min-h-11 focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -28,36 +28,38 @@
     ><img src="/favicon.svg" alt="" class="size-7" />shokkupan</a
   >
 
+  {#if isAuthenticated}
+    <ul class="flex flex-wrap items-center gap-1 text-sm font-medium">
+      {#each authenticatedLinks.filter((l) => l.href !== "/logout") as link}
+        <li><a class={linkStyle} href={link["href"]}>{link["text"]}</a></li>
+      {/each}
+    </ul>
+  {/if}
+
+  <div class="flex-1"></div>
+
   {#if showExecutionButton}
     <button
-            class="btn gap-2 min-h-11 hover:btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2"
-            class:btn-active={executionWindowVisible}
-            on:click={executionButtonClicked}
+      class="btn gap-2 min-h-11 hover:btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2"
+      class:btn-active={executionWindowVisible}
+      on:click={executionButtonClicked}
     >
       <Icon type="file-text" />
       command output
     </button>
   {/if}
 
-  <div class="flex flex-col">
-    <ul class="flex flex-col md:flex-row items-center gap-2 text-sm font-medium">
-      {#if isAuthenticated}
-        {#if username}
-          <li class="flex items-center gap-2 px-3" title="Signed in as {username}">
-            <div class="avatar avatar-placeholder">
-              <div class="bg-primary text-primary-content w-8 rounded-full">
-                <span class="text-xs uppercase">{username.slice(0, 2)}</span>
-              </div>
-            </div>
-            <span class="font-semibold">{username}</span>
-          </li>
-        {/if}
-        {#each authenticatedLinks as link}
-          <li>
-            <a class={linkStyle} href={link["href"]}>{link["text"]}</a>
-          </li>
-        {/each}
+  {#if isAuthenticated}
+    <div class="flex items-center gap-2" title={username ? `Signed in as ${username}` : ""}>
+      {#if username}
+        <div class="avatar avatar-placeholder">
+          <div class="bg-primary text-primary-content w-8 rounded-full">
+            <span class="text-xs uppercase">{username.slice(0, 2)}</span>
+          </div>
+        </div>
+        <span class="font-semibold hidden sm:inline">{username}</span>
       {/if}
-    </ul>
-  </div>
+      <a class={linkStyle} href="/logout">Logout</a>
+    </div>
+  {/if}
 </nav>

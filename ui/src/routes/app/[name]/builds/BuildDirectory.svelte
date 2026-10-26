@@ -26,9 +26,9 @@
     enableBuildDirectory = !!buildDir;
   };
 
-  const getBuildDir = useQuery(queryKey, () => getAppBuildDirectory(appName), {
-    onSuccess: onBuildDirFetched,
-  });
+  const getBuildDir = useQuery(queryKey, () => getAppBuildDirectory(appName));
+  // query-level onSuccess was removed in tanstack query v5
+  $: if ($getBuildDir.isSuccess) onBuildDirFetched($getBuildDir.data);
   const setDir = useMutation(
     (newDir) => setAppBuildDirectory(appName, newDir),
     {

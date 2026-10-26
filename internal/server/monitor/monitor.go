@@ -41,7 +41,7 @@ func transitions(prev, cur map[string]bool) []change {
 }
 
 func snapshot(e *env.Env) (map[string]bool, error) {
-	reports, err := e.Dokku.GetAllProcessReport()
+	reports, err := dokku.GetProcessReports(e)
 	if err != nil {
 		return nil, err
 	}

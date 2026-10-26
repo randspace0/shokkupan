@@ -9,7 +9,8 @@
     refetchInterval: 30000,
   });
 
-  const rate = (b) => `${(b / (1 << 20)).toFixed(2)} MiB/s`;
+  const rate = (b) =>
+    b >= 1 << 20 ? `${(b / (1 << 20)).toFixed(1)} MiB/s` : `${(b / 1024).toFixed(0)} KiB/s`;
 
   let points;
   $: points = $samples.data || [];
@@ -25,17 +26,19 @@
       <Sparkline
         label="CPU"
         max={100}
+        times={points.map((p) => p.at)}
         values={points.map((p) => p.cpu_percent)}
         format={(v) => `${v.toFixed(1)}%`}
       />
       <Sparkline
         label="Memory"
         max={100}
+        times={points.map((p) => p.at)}
         values={points.map((p) => p.mem_percent)}
         format={(v) => `${v.toFixed(1)}%`}
       />
-      <Sparkline label="Network in" values={points.map((p) => p.net_rx_bps)} format={rate} />
-      <Sparkline label="Network out" values={points.map((p) => p.net_tx_bps)} format={rate} />
+      <Sparkline label="Network in" times={points.map((p) => p.at)} values={points.map((p) => p.net_rx_bps)} format={rate} />
+      <Sparkline label="Network out" times={points.map((p) => p.at)} values={points.map((p) => p.net_tx_bps)} format={rate} />
     </div>
     <p class="text-xs text-base-content/70">
       Spikes (CPU or memory at 90%+, network at 50 MB/s+) are written to the

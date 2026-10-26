@@ -47,9 +47,10 @@
   const queryKey = ["getServiceInfo", serviceName];
   const fetchInfo = useQuery(
     queryKey,
-    () => getServiceInfo(serviceName, serviceType),
-    { onSuccess: serviceInfo.set }
+    () => getServiceInfo(serviceName, serviceType)
   );
+  // query-level onSuccess was removed in tanstack query v5
+  $: if ($fetchInfo.data) serviceInfo.set($fetchInfo.data);
 </script>
 
 <ContentPage>

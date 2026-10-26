@@ -81,7 +81,7 @@
         <button
           class="btn btn-primary"
           class:hidden={currentStep + 1 !== steps.length}
-          class:btn-loading
+          class:btn-loading={loading}
           on:click={() => confirmClicked()}
         >
           {confirmButtonText}
