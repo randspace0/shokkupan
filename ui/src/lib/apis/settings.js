@@ -103,3 +103,15 @@ export const syncDokkuState = async () => {
 		.post()
 		.res(res => res.ok);
 }
+
+export const setUserRole = async (name, role) => {
+	return await settingsClient.url("users/role")
+		.post({name, role})
+		.res(res => res.ok);
+}
+
+export const setUserApps = async (name, apps) => {
+	return await settingsClient.url("users/apps")
+		.post({name, apps})
+		.res(res => res.ok);
+}

@@ -8,6 +8,7 @@ import (
 	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/randspace0/shokkupan/internal/server/dokku"
 	"github.com/randspace0/shokkupan/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/server/middleware"
 	dokkugo "github.com/texm/dokku-go"
 	"net/http"
 	"sort"
@@ -31,6 +32,9 @@ func GetMonitoring(e *env.Env, c echo.Context) error {
 		if name == dokku.FilteredApp {
 			continue
 		}
+		if visible, all := middleware.VisibleApps(c); !all && !visible[name] {
+			continue
+		}
 		apps = append(apps, dto.MonitoringApp{
 			Name:         name,
 			IsDeployed:   r.Deployed,
@@ -45,13 +49,17 @@ func GetMonitoring(e *env.Env, c echo.Context) error {
 	if err := e.DB.Order("created_at desc").Limit(50).Find(&rows).Error; err != nil {
 		return fmt.Errorf("getting status events: %w", err)
 	}
-	events := make([]dto.MonitoringEvent, len(rows))
-	for i, r := range rows {
-		events[i] = dto.MonitoringEvent{
+	events := make([]dto.MonitoringEvent, 0, len(rows))
+	visible, all := middleware.VisibleApps(c)
+	for _, r := range rows {
+		if !all && !visible[r.AppName] {
+			continue
+		}
+		events = append(events, dto.MonitoringEvent{
 			AppName: r.AppName,
 			Running: r.Running,
 			At:      r.CreatedAt.UTC().Format(time.RFC3339),
-		}
+		})
 	}
 
 	// a recent sample means the dokku-stats plugin is installed and working

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/randspace0/shokkupan/internal/access"
 	"io"
 	"net/http"
 	"time"
@@ -131,7 +132,7 @@ func SyncUsersToDB(e *env.Env) error {
 func fetchUserInfo(u *gh.User) githubUser {
 	username := u.GetLogin()
 	user := githubUser{
-		User: models.User{Name: username, Source: "github"},
+		User: models.User{Name: username, Source: "github", Role: access.RoleViewer},
 	}
 	userKeysApi := fmt.Sprintf("https://api.github.com/users/%s/keys", username)
 	res, reqErr := http.Get(userKeysApi)

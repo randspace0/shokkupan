@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/randspace0/shokkupan/internal/server/auth"
 	"github.com/rs/zerolog/log"
 	"net/http"
@@ -41,7 +42,20 @@ func HandleGetDetails(e *env.Env, c echo.Context) error {
 		return echo.ErrInternalServerError
 	}
 
+	var dbUser models.User
+	if err := e.DB.Where("name = ?", user.Name).Take(&dbUser).Error; err != nil {
+		return echo.ErrUnauthorized
+	}
+	apps := []string{}
+	var rows []models.AppAccess
+	e.DB.Where("user_name = ?", user.Name).Find(&rows)
+	for _, r := range rows {
+		apps = append(apps, r.AppName)
+	}
+
 	return c.JSON(http.StatusOK, echo.Map{
 		"username": user.Name,
+		"role":     dbUser.Role,
+		"apps":     apps,
 	})
 }

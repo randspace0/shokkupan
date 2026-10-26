@@ -1,5 +1,5 @@
 <script>
-  import { getUsers, getSSHKeys } from "$lib/api";
+  import { getUsers, getSSHKeys, getAppsList } from "$lib/api";
   import { useQuery } from "$lib/query";
   import QueryDataWrapper from "$common/QueryDataWrapper.svelte";
   import SSHKey from "./SSHKey.svelte";
@@ -8,16 +8,18 @@
 
   const users = useQuery("getUsers", getUsers);
   const keys = useQuery("getSSHKeys", getSSHKeys);
+  const appsList = useQuery("getAppsList", getAppsList);
+  $: allApps = ($appsList.data || []).map((a) => a.name);
 
   const addKey = () => alert("add key");
 </script>
 
 <div class="flex flex-col gap-4">
   <QueryDataWrapper query={users} action="getting users">
-    <Card title="Users">
+    <Card title="Users and access">
       <div class="flex flex-col gap-2">
         {#each $users.data as user}
-          <UserCard {...user} />
+          <UserCard {...user} {allApps} />
         {/each}
       </div>
     </Card>
