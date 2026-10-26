@@ -7,6 +7,7 @@ RUN npm --prefix /app/ui run build
 FROM --platform=$BUILDPLATFORM golang:alpine AS go_builder
 ARG TARGETOS=linux
 ARG TARGETARCH
+ARG VERSION=dev
 WORKDIR /app
 RUN apk update && apk add --no-cache git
 COPY cmd ./cmd
@@ -15,7 +16,7 @@ COPY internal ./internal
 COPY --from=npm_builder /app/ui/dist ./cmd/shokku/dist
 RUN go get -d -v ./...
 RUN go install -v ./...
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-w -s" -o /go/bin/shokku ./cmd/shokku
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-w -s -X gitlab.com/texm/shokku/internal/env.Version=${VERSION}" -o /go/bin/shokku ./cmd/shokku
 
 FROM gcr.io/distroless/static:nonroot
 COPY --from=go_builder /go/bin/shokku /go/bin/shokku
