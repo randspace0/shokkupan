@@ -32,6 +32,22 @@
 
 <QueryDataWrapper query={serviceBackupReport} action="loading backup info">
   <Cards>
+    <Card title="Download a dump">
+      <p class="text-sm text-base-content/70">
+        Streams a dump of this service straight to your computer. No bucket
+        needed. Keep the file safe: it contains all of the service's data.
+      </p>
+      <div slot="actions">
+        <a
+          class="btn btn-primary"
+          href="/api/services/backups/download?name={encodeURIComponent(serviceName)}"
+          download
+        >
+          Download dump
+        </a>
+      </div>
+    </Card>
+
     <Card title="Run Backup">
       {#if !ready}
         <Alert

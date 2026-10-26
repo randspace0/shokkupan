@@ -112,3 +112,7 @@ type SetServiceBackupsEncryptionRequest struct {
 	Name       string `json:"name" validate:"appName"`
 	Passphrase string `json:"passphrase"`
 }
+
+type DownloadServiceDumpRequest struct {
+	Name string `query:"name" validate:"appName"`
+}
