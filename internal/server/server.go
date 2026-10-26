@@ -73,6 +73,7 @@ func New(cfg Config, appFS fs.FS) (*env.Env, error) {
 
 	go commands.PollStatuses()
 	go monitor.Run(e)
+	go dokku.SyncPeriodically(e)
 	go sysmon.Run(e)
 
 	return e, nil
