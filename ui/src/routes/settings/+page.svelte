@@ -75,7 +75,7 @@
         <div class="stats shadow w-fit">
           <div class="stat">
             <div class="stat-title">Shokkupan</div>
-            <div class="stat-value">{$versions.data["shokku"]}</div>
+            <div class="stat-value">{$versions.data["shokkupan"]}</div>
           </div>
         </div>
 
@@ -86,14 +86,7 @@
           </div>
         </div>
         <p class="text-sm text-base-content/70 max-w-prose">
-          Shokkupan is a fork of
-          <a
-            class="link link-primary"
-            href="https://github.com/texm/shokku"
-            target="_blank"
-            rel="noreferrer">shokku</a
-          >
-          by texm, licensed under AGPL.
+          Shokkupan is open source, licensed under AGPL.
         </p>
       </div>
     </QueryDataWrapper>

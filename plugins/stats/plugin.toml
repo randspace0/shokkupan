@@ -1,4 +1,4 @@
 [plugin]
-description = "Per-app CPU and memory stats for shokku"
+description = "Per-app CPU and memory stats for shokkupan"
 version = "0.1.0"
 [plugin.config]

@@ -1,77 +1,77 @@
 #!/bin/bash
 set -e
 
-# This script installs and sets up shokku with a few prerequisites:
+# This script installs and sets up shokkupan with a few prerequisites:
 # dokku must be installed
 # a global domain must be set
 # letsencrypt must be configured and enabled with global email set
 
 DOKKU_STORAGE_DIR="/var/lib/dokku/data/storage/"
-SHOKKU_DATA_DIR="$DOKKU_STORAGE_DIR/shokku"
-SHOKKU_APP_DATA_MOUNT_PATH="$SHOKKU_DATA_DIR:/data"
-SHOKKU_VERSION=${SHOKKU_VERSION:-"latest"}
-SHOKKU_IMAGE="ghcr.io/texm/shokku:$SHOKKU_VERSION"
+SHOKKUPAN_DATA_DIR="$DOKKU_STORAGE_DIR/shokkupan"
+SHOKKUPAN_APP_DATA_MOUNT_PATH="$SHOKKUPAN_DATA_DIR:/data"
+SHOKKUPAN_VERSION=${SHOKKUPAN_VERSION:-"latest"}
+SHOKKUPAN_IMAGE="ghcr.io/randspace0/shokkupan:$SHOKKUPAN_VERSION"
 
-SHOKKU_DOKKU_USER="shokkuadmin"
+SHOKKUPAN_DOKKU_USER="shokkupanadmin"
 DISTROLESS_NONROOT_UID="65532"
 
-clean-shokku() {
+clean-shokkupan() {
   echo "=> checking for existing resources"
 
-  if dokku apps:exists shokku &>/dev/null; then
+  if dokku apps:exists shokkupan &>/dev/null; then
     echo "==> destroying old dokku app"
-    dokku apps:destroy --force shokku &>/dev/null
+    dokku apps:destroy --force shokkupan &>/dev/null
   fi
 
-  if dokku ssh-keys:list "$SHOKKU_DOKKU_USER" &>/dev/null; then
+  if dokku ssh-keys:list "$SHOKKUPAN_DOKKU_USER" &>/dev/null; then
     echo "==> removing existing dokku ssh key"
-    dokku ssh-keys:remove $SHOKKU_DOKKU_USER
+    dokku ssh-keys:remove $SHOKKUPAN_DOKKU_USER
   fi
 
   echo "==> done"
 }
 
-create-shokku-app() {
-  clean-shokku
+create-shokkupan-app() {
+  clean-shokkupan
 
-  echo "=> pulling image (version: $SHOKKU_VERSION)"
+  echo "=> pulling image (version: $SHOKKUPAN_VERSION)"
   HOST_SSH_PORT=$(grep "Port " /etc/ssh/sshd_config | awk '{ print $2 }')
-  docker pull "$SHOKKU_IMAGE" &>/dev/null
-  SHOKKU_IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "$SHOKKU_IMAGE")
+  docker pull "$SHOKKUPAN_IMAGE" &>/dev/null
+  SHOKKUPAN_IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "$SHOKKUPAN_IMAGE")
 
   echo "=> creating & configuring dokku app"
-  dokku apps:create shokku &>/dev/null
-  dokku docker-options:add shokku deploy \
+  dokku apps:create shokkupan &>/dev/null
+  dokku docker-options:add shokkupan deploy \
     "--add-host=host.docker.internal:host-gateway" &>/dev/null
-  dokku config:set shokku \
+  dokku config:set shokkupan \
     DOKKU_SSH_HOST='host.docker.internal' \
     DOKKU_SSH_PORT="$HOST_SSH_PORT" &>/dev/null
 
   echo "==> creating storage"
-  dokku storage:ensure-directory shokku --chown false &>/dev/null
-  dokku storage:mount shokku "$SHOKKU_APP_DATA_MOUNT_PATH" &>/dev/null
-  chown -R "$DISTROLESS_NONROOT_UID":"$DISTROLESS_NONROOT_UID" "$SHOKKU_DATA_DIR" &>/dev/null
+  dokku storage:ensure-directory shokkupan --chown false &>/dev/null
+  dokku storage:mount shokkupan "$SHOKKUPAN_APP_DATA_MOUNT_PATH" &>/dev/null
+  chown -R "$DISTROLESS_NONROOT_UID":"$DISTROLESS_NONROOT_UID" "$SHOKKUPAN_DATA_DIR" &>/dev/null
 
   echo "==> bootstrapping"
-  dokku config:set shokku DOKKU_SKIP_DEPLOY=true &>/dev/null
-  dokku git:from-image shokku "$SHOKKU_IMAGE_DIGEST" &>/dev/null
+  dokku config:set shokkupan DOKKU_SKIP_DEPLOY=true &>/dev/null
+  dokku git:from-image shokkupan "$SHOKKUPAN_IMAGE_DIGEST" &>/dev/null
 
-  shokku_ssh_key=$(dokku run shokku bootstrap) &>/dev/null
-  echo "$shokku_ssh_key" | dokku ssh-keys:add "$SHOKKU_DOKKU_USER" &>/dev/null
+  shokkupan_ssh_key=$(dokku run shokkupan bootstrap) &>/dev/null
+  echo "$shokkupan_ssh_key" | dokku ssh-keys:add "$SHOKKUPAN_DOKKU_USER" &>/dev/null
 
   echo "==> deploying"
-  dokku config:unset shokku DOKKU_SKIP_DEPLOY &>/dev/null
+  dokku config:unset shokkupan DOKKU_SKIP_DEPLOY &>/dev/null
 
-  if [ -z "$SHOKKU_CERT" ]; then
+  if [ -z "$SHOKKUPAN_CERT" ]; then
     echo "==> enabling letsencrypt"
-    if [ -n "$SHOKKU_LETSENCRYPT_EMAIL" ]; then
-      dokku letsencrypt:set shokku email "$SHOKKU_LETSENCRYPT_EMAIL" &>/dev/null
+    if [ -n "$SHOKKUPAN_LETSENCRYPT_EMAIL" ]; then
+      dokku letsencrypt:set shokkupan email "$SHOKKUPAN_LETSENCRYPT_EMAIL" &>/dev/null
     fi
     # not silenced: a failure here (bad email, DNS, rate limit) must be visible
-    dokku letsencrypt:enable shokku
+    dokku letsencrypt:enable shokkupan
   else
-    echo "==> adding certificate from SHOKKU_CERT"
-    dokku certs:add shokku < "$SHOKKU_CERT"
+    echo "==> adding certificate from SHOKKUPAN_CERT"
+    dokku certs:add shokkupan < "$SHOKKUPAN_CERT"
   fi
 }
 
@@ -86,16 +86,16 @@ main() {
     exit 1
   fi
 
-  if [ -z "$SHOKKU_CERT" ]; then
+  if [ -z "$SHOKKUPAN_CERT" ]; then
     if ! dokku plugin:installed letsencrypt; then
       echo "Please setup letsencrypt using the instructions at https://dokku.com/docs/deployment/application-deployment/#setting-up-ssl" 1>&2
       exit 1
     fi
   fi
 
-  if [ -z "$SHOKKU_CERT" ] && [ -z "$SHOKKU_LETSENCRYPT_EMAIL" ] \
+  if [ -z "$SHOKKUPAN_CERT" ] && [ -z "$SHOKKUPAN_LETSENCRYPT_EMAIL" ] \
     && [ -z "$(dokku letsencrypt:report --global --letsencrypt-global-email 2>/dev/null)" ]; then
-    echo "No letsencrypt email: export SHOKKU_LETSENCRYPT_EMAIL=you@example.com, or run 'dokku letsencrypt:set --global email you@example.com'" 1>&2
+    echo "No letsencrypt email: export SHOKKUPAN_LETSENCRYPT_EMAIL=you@example.com, or run 'dokku letsencrypt:set --global email you@example.com'" 1>&2
     exit 1
   fi
 
@@ -106,14 +106,14 @@ main() {
     fi
   done
 
-  create-shokku-app
+  create-shokkupan-app
 
-  shokku_app_domain=$(dokku domains:report shokku --domains-app-vhosts)
-  shokku_setup_key=$(dokku logs -q shokku | grep setup_key | jq ".setup_key")
+  shokkupan_app_domain=$(dokku domains:report shokkupan --domains-app-vhosts)
+  shokkupan_setup_key=$(dokku logs -q shokkupan | grep setup_key | jq ".setup_key")
 
   echo "---"
-  echo "=> shokku installed and running "
-  echo "--- proceed with setup using key $shokku_setup_key at https://$shokku_app_domain ---"
+  echo "=> shokkupan installed and running "
+  echo "--- proceed with setup using key $shokkupan_setup_key at https://$shokkupan_app_domain ---"
 }
 
 main

@@ -1,5 +1,5 @@
 <p>
-	Shokku is an interface for <a href="https://dokku.com" class="link">Dokku</a> - an
+	Shokkupan is an interface for <a href="https://dokku.com" class="link">Dokku</a> - an
 	open source, self-hostable <a href="https://en.wikipedia.org/wiki/Platform_as_a_service">PaaS</a>
 	(commercial options include <a href="https://heroku.com">Heroku</a>,
 	<a href="https://fly.io">fly.io</a>, or <a href="https://render.com">Render</a>)
@@ -9,16 +9,16 @@
 </p>
 
 <p>
-	Shokku is not associated with Dokku - but it is similarly open-source and
+	Shokkupan is not associated with Dokku - but it is similarly open-source and
 	freely available on Github at
-	<a class="link" href="https://github.com/texm/shokku">texm/shokku</a>.
+	<a class="link" href="https://github.com/randspace0/shokkupan">randspace0/shokkupan</a>.
 </p>
 
 <h2>
 	Features
 </h2>
 <p>
-	Shokku aims to be as simple to install and operate as Dokku, providing access to
+	Shokkupan aims to be as simple to install and operate as Dokku, providing access to
 	most functionality without needing to use the terminal or manage SSH access for users.
 </p>
 

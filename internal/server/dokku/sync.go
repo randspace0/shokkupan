@@ -17,7 +17,7 @@ var (
 	serviceTypes   = []string{"redis", "postgres", "mysql", "mongo"}
 )
 
-const FilteredApp = "shokku"
+const FilteredApp = "shokkupan"
 
 // syncInterval is how often apps created outside shokkupan (CI, the dokku
 // CLI) are picked up.

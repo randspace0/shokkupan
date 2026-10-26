@@ -1,12 +1,12 @@
 # shokkupan
 
-![whaleboat logo](https://raw.githubusercontent.com/texm/shokku/main/web/static/images/whale-boat-sm.png)
+<img src="ui/static/favicon.svg" alt="shokkupan logo" width="96" />
 
 _shokupan_ (食パン) is Japanese milk bread, the white loaf.
 
-> A fork of [texm/shokku](https://github.com/texm/shokku), a friendly web interface for [Dokku](https://github.com/dokku/dokku), the open-source Platform-as-a-Service. Licensed AGPL, like the original.
+> A friendly web interface for [Dokku](https://github.com/dokku/dokku), the open-source Platform-as-a-Service. Licensed AGPL.
 
-## What it adds over shokku
+## Features
 
 - Rebranded and redesigned UI on Svelte 5, SvelteKit 2, Tailwind CSS 4 and daisyUI 5, with a signed-in user shown in the navbar.
 - Raw `.env` editor next to the key/value table for app environment variables.
@@ -18,14 +18,14 @@ _shokupan_ (食パン) is Japanese milk bread, the white loaf.
 
 ## Install
 
-Shokkupan runs as a Dokku app on the host it manages. See the original [installation docs](https://shokku.dev/docs) and `bootstrap.sh`. To deploy this fork to an existing Dokku app:
+Shokkupan runs as a Dokku app on the host it manages. See `bootstrap.sh`. To deploy to an existing Dokku app:
 
 ```bash
-dokku builder:set shokku selected dockerfile
-dokku git:sync --build shokku https://github.com/randspace0/shokkupan main
+dokku builder:set shokkupan selected dockerfile
+dokku git:sync --build shokkupan https://github.com/randspace0/shokkupan main
 ```
 
-The first login goes through a GitHub App. Open `/setup` on your domain and enter the setup key printed in the container log (`dokku logs shokku | grep setup_key`). The GitHub App's callback URLs must include your host (`https://<host>/login/github/callback` and `https://<host>/setup/github/installed`), so recreate or edit the app if you change the domain.
+The first login goes through a GitHub App. Open `/setup` on your domain and enter the setup key printed in the container log (`dokku logs shokkupan | grep setup_key`). The GitHub App's callback URLs must include your host (`https://<host>/login/github/callback` and `https://<host>/setup/github/installed`), so recreate or edit the app if you change the domain.
 
 Builds are heavy (npm install plus a Go compile). On a small host, build the image elsewhere and deploy it with `dokku git:from-image`.
 

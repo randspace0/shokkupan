@@ -6,7 +6,7 @@ import (
 	"github.com/randspace0/shokkupan/internal/env"
 	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/randspace0/shokkupan/internal/server/commands"
-	shokkudokku "github.com/randspace0/shokkupan/internal/server/dokku"
+	appdokku "github.com/randspace0/shokkupan/internal/server/dokku"
 	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/randspace0/shokkupan/internal/server/middleware"
 	"github.com/rs/zerolog/log"
@@ -18,7 +18,7 @@ import (
 	"github.com/texm/dokku-go"
 )
 
-const FilteredApp = "shokku"
+const FilteredApp = "shokkupan"
 
 func lookupDBAppByName(e *env.Env, name string) (*models.App, error) {
 	dbApp := models.App{Name: name}
@@ -57,7 +57,7 @@ func GetAppsList(e *env.Env, c echo.Context) error {
 }
 
 func GetAppsProcessReport(e *env.Env, c echo.Context) error {
-	allReports, err := shokkudokku.GetProcessReports(e)
+	allReports, err := appdokku.GetProcessReports(e)
 	if err != nil {
 		return fmt.Errorf("failed to get apps report: %w", err)
 	}

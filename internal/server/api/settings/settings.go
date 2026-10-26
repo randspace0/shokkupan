@@ -17,7 +17,7 @@ func GetVersions(e *env.Env, c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, &dto.GetVersionsResponse{
 		Dokku:  dokkuVersion,
-		Shokku: e.Version,
+		Shokkupan: e.Version,
 	})
 }
 

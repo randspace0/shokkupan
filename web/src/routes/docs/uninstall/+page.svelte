@@ -2,14 +2,14 @@
 	import Hint from "$components/Hint.svelte";
 
   const commands = [
-		"dokku apps:destroy --force shokku",
-		"dokku ssh-keys:remove shokkuadmin",
-		"rm -r /var/lib/dokku/data/storage/shokku",
+		"dokku apps:destroy --force shokkupan",
+		"dokku ssh-keys:remove shokkupanadmin",
+		"rm -r /var/lib/dokku/data/storage/shokkupan",
 	]
 </script>
 
 <p>
-	To completely uninstall Shokku, run the following commands
+	To completely uninstall Shokkupan, run the following commands
 </p>
 
 <div class="mockup-code mb-4">

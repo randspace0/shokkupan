@@ -1,7 +1,7 @@
 // Package sysmon samples host CPU, memory and network while the
 // "server monitoring" switch is on, and logs a warning on spikes.
 //
-// Shokku runs in a container: /proc/stat and /proc/meminfo report the host,
+// Shokkupan runs in a container: /proc/stat and /proc/meminfo report the host,
 // but /proc/net/dev only covers the container's network namespace.
 package sysmon
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Install a shokku companion plugin on a dokku host, independently of shokku:
+# Install a shokkupan companion plugin on a dokku host, independently of shokkupan:
 #   curl -fsSL https://raw.githubusercontent.com/randspace0/shokkupan/main/plugins/install.sh | sudo bash -s discord
-# Override SHOKKU_REPO / SHOKKU_REF to install from a fork, branch or tag.
+# Override SHOKKUPAN_REPO / SHOKKUPAN_REF to install from a fork, branch or tag.
 set -euo pipefail
 
 NAME="${1:-}"
-REPO="${SHOKKU_REPO:-randspace0/shokkupan}"
-REF="${SHOKKU_REF:-main}"
+REPO="${SHOKKUPAN_REPO:-randspace0/shokkupan}"
+REF="${SHOKKUPAN_REF:-main}"
 PLUGINS_DIR="/var/lib/dokku/plugins/available"
 
 if [[ "$(id -u)" != "0" ]]; then

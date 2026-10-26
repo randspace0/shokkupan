@@ -2,7 +2,7 @@
 	const bootstrapLink = "https://raw.githubusercontent.com/randspace0/shokkupan/main/bootstrap.sh";
 	// piped, not saved: a downloaded bootstrap.sh collides with dokku's own installer file
 	const scriptInstallCommands = [
-		`export SHOKKU_LETSENCRYPT_EMAIL="foo@example.com"`,
+		`export SHOKKUPAN_LETSENCRYPT_EMAIL="foo@example.com"`,
 		`curl -fsSL ${bootstrapLink} | sudo -E bash`,
 	];
 </script>
@@ -10,26 +10,26 @@
 <h2>Requirements</h2>
 <h3>Dokku</h3>
 <p>
-	Shokku requires an underlying Dokku installation.
+	Shokkupan requires an underlying Dokku installation.
 	You are recommended to manually install & configure it following
 	<a href="https://dokku.com/docs/getting-started/installation/">the official documentation</a>.
 </p>
 
 <h3>SSL</h3>
 <p>
-	Shokku will only work over HTTPS, so SSL must be configured. This can be via:
+	Shokkupan will only work over HTTPS, so SSL must be configured. This can be via:
 </p>
 <ul>
 	<li>
 		<strong>Automatic (LetsEncrypt)</strong> <br />
 		If a global email has been set, it will automatically be used. Otherwise,
-		ensure the <code>SHOKKU_LETSENCRYPT_EMAIL</code> environment variable is set during
+		ensure the <code>SHOKKUPAN_LETSENCRYPT_EMAIL</code> environment variable is set during
 		installation to a valid email.
 	</li>
 	<li>
 		<strong>Manual</strong>
 		<br />
-		Set the <code>SHOKKU_CERT</code> environment variable to point to a tarball containing the
+		Set the <code>SHOKKUPAN_CERT</code> environment variable to point to a tarball containing the
 		certificate contents. Tarball creation instructions can be found
 		<a href="https://dokku.com/docs/configuration/ssl/#certificate-setting">here</a>.
 	</li>
@@ -41,12 +41,12 @@
 	<a href="https://dokku.com/docs/getting-started/installation/#system-requirements">
 	the operating systems supported by Dokku</a>.
 	<br />
-	Shokku is lightweight and will consume very little resources.
+	Shokkupan is lightweight and will consume very little resources.
 </p>
 
 <h4>DigitalOcean</h4>
 <p>
-	For a cheap hosted server to try Shokku out, consider using DigitalOcean via this referral
+	For a cheap hosted server to try Shokkupan out, consider using DigitalOcean via this referral
 	link. I get a kickback, and you get $200 in credit for 60 days - why not provision something beefy :)
 </p>
 <a target="_blank" href="https://www.digitalocean.com/?refcode=2fb615299eca&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">

@@ -2,11 +2,11 @@
 	import Hint from "$components/Hint.svelte";
 
 	// TODO: update this
-	const shokkuImage = "repo/shokku";
+	const shokkupanImage = "ghcr.io/randspace0/shokkupan";
   const manualCmds = [
-	  `export SHOKKU_VERSION=latest`,
-	  `docker pull "${shokkuImage}:$SHOKKU_VERSION"`,
-	  `dokku git:from-image shokku $(docker inspect --format='{{index .RepoDigests 0}}' "${shokkuImage}:$SHOKKU_VERSION")`
+	  `export SHOKKUPAN_VERSION=latest`,
+	  `docker pull "${shokkupanImage}:$SHOKKUPAN_VERSION"`,
+	  `dokku git:from-image shokkupan $(docker inspect --format='{{index .RepoDigests 0}}' "${shokkupanImage}:$SHOKKUPAN_VERSION")`
   ];
 </script>
 

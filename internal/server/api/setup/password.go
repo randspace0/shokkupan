@@ -20,7 +20,7 @@ import (
 
 func GenerateTotp(e *env.Env, c echo.Context) error {
 	key, err := totp.Generate(totp.GenerateOpts{
-		Issuer:      "shokku",
+		Issuer:      "shokkupan",
 		AccountName: "admin account",
 	})
 	if err != nil {

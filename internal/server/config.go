@@ -13,7 +13,7 @@ type Config struct {
 	DokkuSSHHost string `env:"DOKKU_SSH_HOST,default=127.0.0.1"`
 	DokkuSSHPort string `env:"DOKKU_SSH_PORT,default=22"`
 
-	DBPath string `env:"DB_PATH,default=/data/shokku.db"`
+	DBPath string `env:"DB_PATH,default=/data/shokkupan.db"`
 
 	AuthTokenLifetimeMinutes int `env:"TOKEN_LIFETIME_MINS,default=15"`
 }

@@ -24,7 +24,7 @@
 		nextPage = (currentPage < sidebarPages.length - 1) ? sidebarPages[currentPage + 1] : null;
 	}
 
-	$: pageTitle = `Shokku Docs - ${sidebarPages[currentPage].label}`;
+	$: pageTitle = `Shokkupan Docs - ${sidebarPages[currentPage].label}`;
 </script>
 
 <svelte:head>

@@ -8,8 +8,8 @@
 </script>
 
 <svelte:head>
-	<title>Shokku</title>
-	<SocialShareMeta title="Shokku" />
+	<title>Shokkupan</title>
+	<SocialShareMeta title="Shokkupan" />
 </svelte:head>
 
 <div class="flex flex-col bg-base-300">

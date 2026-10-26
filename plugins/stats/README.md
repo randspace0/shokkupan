@@ -32,7 +32,7 @@ myapp  web  3f2a1b9c0d4e  0.35%  41.2MiB / 1.94GiB
 ```
 
 Nothing is printed when no matching container is running. The plugin is
-read-only and keeps no state; shokku samples it periodically.
+read-only and keeps no state; shokkupan samples it periodically.
 
 ## License
 

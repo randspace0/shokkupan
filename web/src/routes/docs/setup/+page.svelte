@@ -1,7 +1,7 @@
 <script>
 	const ghAppUrl = "https://docs.github.com/en/apps/creating-github-apps/creating-github-apps/about-apps"
 	const manifestUrl = "https://docs.github.com/en/apps/creating-github-apps/creating-github-apps/creating-a-github-app-from-a-manifest";
-	const codeManifestUrl = "https://github.com/texm/shokku/blob/main/ui/src/routes/setup/github/%2Bpage.svelte#L10-L28"
+	const codeManifestUrl = "https://github.com/randspace0/shokkupan/blob/main/ui/src/routes/setup/github/%2Bpage.svelte#L10-L28"
 </script>
 
 <h2>Setup Key</h2>
@@ -32,7 +32,7 @@
 <h4>Organisation Install</h4>
 <p>
 	If you install on behalf of an organisation, all members of the organisation
-	will be able to authenticate and use Shokku. There is currently no role-based
+	will be able to authenticate and use Shokkupan. There is currently no role-based
 	access, so ensure you trust your fellow org members as admins!
 </p>
 

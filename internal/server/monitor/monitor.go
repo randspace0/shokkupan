@@ -127,7 +127,7 @@ func poll(e *env.Env, prev map[string]bool) map[string]bool {
 }
 
 // Run polls forever; the first poll only seeds state so a restart of
-// shokku does not alert on every app.
+// shokkupan does not alert on every app.
 func Run(e *env.Env) {
 	var state map[string]bool
 	for {

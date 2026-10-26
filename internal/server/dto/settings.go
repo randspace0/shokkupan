@@ -4,7 +4,7 @@ import "github.com/texm/dokku-go"
 
 type GetVersionsResponse struct {
 	Dokku  string `json:"dokku"`
-	Shokku string `json:"shokku"`
+	Shokkupan string `json:"shokkupan"`
 }
 
 type GetLetsEncryptStatusResponse struct {

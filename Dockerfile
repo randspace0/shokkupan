@@ -13,11 +13,11 @@ RUN apk update && apk add --no-cache git
 COPY cmd ./cmd
 COPY go.mod ./go.mod
 COPY internal ./internal
-COPY --from=npm_builder /app/ui/dist ./cmd/shokku/dist
+COPY --from=npm_builder /app/ui/dist ./cmd/shokkupan/dist
 RUN go get -d -v ./...
 RUN go install -v ./...
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-w -s -X github.com/randspace0/shokkupan/internal/env.Version=${VERSION}" -o /go/bin/shokku ./cmd/shokku
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-w -s -X github.com/randspace0/shokkupan/internal/env.Version=${VERSION}" -o /go/bin/shokkupan ./cmd/shokkupan
 
 FROM gcr.io/distroless/static:nonroot
-COPY --from=go_builder /go/bin/shokku /go/bin/shokku
-ENTRYPOINT ["/go/bin/shokku"]
+COPY --from=go_builder /go/bin/shokkupan /go/bin/shokkupan
+ENTRYPOINT ["/go/bin/shokkupan"]

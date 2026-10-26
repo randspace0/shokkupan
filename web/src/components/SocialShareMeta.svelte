@@ -9,4 +9,4 @@
 <meta name="twitter:card" content={cardImgUrl}>
 
 <meta property="og:description" content="Free and open source interface for the Dokku PaaS">
-<meta name="twitter:image:alt" content="Shokku Logo">
+<meta name="twitter:image:alt" content="Shokkupan Logo">

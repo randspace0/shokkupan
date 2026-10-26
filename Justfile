@@ -2,9 +2,9 @@ set shell := ["bash", "-uc"]
 
 ui_npm := 'npm --prefix ui'
 web_npm := 'npm --prefix web'
-shokku_image := 'texm/shokku:latest'
+shokkupan_image := 'randspace0/shokkupan:latest'
 dokku_image := 'dokku/dokku:0.30.2'
-dokku_container_name := 'shokku-dokku-dev'
+dokku_container_name := 'shokkupan-dokku-dev'
 # for linux can this just be /var/lib/dokku ?
 dokku_data_mount_dir := '/tmp/colima/var/lib/dokku'
 dokku_ssh_host := '127.0.0.1'
@@ -40,18 +40,18 @@ _default:
 	-echo -n '{{reflex_script}}' | reflex -d 'fancy' -c '-'
 
 @dev-backend: _touch-cmd-dist _setup-dokku
-	just _run-with-env go run ./cmd/shokku
+	just _run-with-env go run ./cmd/shokkupan
 
 @dev-ui:
 	-{{ui_npm}} run dev
 
-# build a static /cmd/shokku binary
+# build a static /cmd/shokkupan binary
 @build:
 	{{ui_npm}} run build
-	mv ./ui/dist ./cmd/shokku
-	# GOOS=linux GOARCH=amd64 go build -o shokku ./cmd/shokku
-	-go build -o shokku ./cmd/shokku
-	-rm -r ./cmd/shokku/dist
+	mv ./ui/dist ./cmd/shokkupan
+	# GOOS=linux GOARCH=amd64 go build -o shokkupan ./cmd/shokkupan
+	-go build -o shokkupan ./cmd/shokkupan
+	-rm -r ./cmd/shokkupan/dist
 
 @format:
 	go fmt ./...
@@ -64,15 +64,15 @@ _default:
 
 # build the docker image and tag as latest
 build-docker:
-	docker build -t "{{shokku_image}}" .
+	docker build -t "{{shokkupan_image}}" .
 
-# run the docker image 'texm/shokku:latest' with environment vars set
+# run the docker image 'randspace0/shokkupan:latest' with environment vars set
 run-docker:
 	@docker run -d \
 		-e DOKKU_SSH_HOST='{{dokku_ssh_host}}' \
 		-e DOKKU_SSH_PORT='{{dokku_ssh_port}}' \
 		-e DB_PATH='{{db_path}}' \
-		{{shokku_image}}
+		{{shokkupan_image}}
 
 ###
 # Private helper recipes
@@ -87,7 +87,7 @@ run-docker:
 
 ## helpers
 @_touch-cmd-dist:
-	mkdir -p ./cmd/shokku/dist && touch ./cmd/shokku/dist/bleh
+	mkdir -p ./cmd/shokkupan/dist && touch ./cmd/shokkupan/dist/bleh
 
 @_run-with-env +CMD:
 	DOKKU_SSH_HOST='{{dokku_ssh_host}}' \
@@ -100,7 +100,7 @@ run-docker:
 ## builds & cleaning
 @_clean-backend:
 	go clean
-	-rm -r ./cmd/shokku/dist &> /dev/null
+	-rm -r ./cmd/shokkupan/dist &> /dev/null
 	-rm {{db_path}} &> /dev/null
 	-rm {{host_keyfile}} &> /dev/null
 
@@ -112,7 +112,7 @@ run-docker:
 ## Setup
 
 @_setup-backend: _touch-cmd-dist
-	just _run-with-env go run ./cmd/shokku bootstrap > {{host_keyfile}}
+	just _run-with-env go run ./cmd/shokkupan bootstrap > {{host_keyfile}}
 	just _add-dokku-ssh-key;
 
 _setup-dokku:
@@ -136,7 +136,7 @@ _setup-dokku:
 		{{dokku_image}} > /dev/null
 
 	if [[ "{{ os() }}" == 'macos' ]]; then \
-		docker exec shokku-dokku-dev bash -c \
+		docker exec shokkupan-dokku-dev bash -c \
 			'groupmod -g 99 systemd-timesync && groupmod -g 101 docker'; fi
 
 @_install-dokku-plugins:

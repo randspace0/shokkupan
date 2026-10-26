@@ -3,11 +3,11 @@
 ui/node_modules/
 ui/.svelte-kit
 ui/dist
-cmd/shokku/dist
+cmd/shokkupan/dist
 .env
 .test_keyfile
 test.db
-./shokku
+./shokkupan
 .idea
 ui/.mock/
 .tokensave/
