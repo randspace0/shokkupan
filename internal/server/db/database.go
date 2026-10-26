@@ -27,6 +27,7 @@ func Init(dsn string) (*gorm.DB, error) {
 		&models.Service{},
 		&models.User{},
 		&models.SSHKey{},
+		&models.AppAccess{},
 		&models.GithubApp{},
 		&models.AppSetupConfig{},
 		&models.AppStatusEvent{},

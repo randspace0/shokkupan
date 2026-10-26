@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
+	"github.com/randspace0/shokkupan/internal/access"
 	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/randspace0/shokkupan/internal/randstr"
 	"github.com/randspace0/shokkupan/internal/server/auth"
@@ -77,6 +78,7 @@ func CompletePasswordSetup(e *env.Env, c echo.Context) error {
 	user := models.User{
 		Name:         req.Username,
 		Source:       "manual",
+		Role:         access.RoleAdmin,
 		PasswordHash: passwordHash,
 		TotpEnabled:  req.Enable2FA,
 		RecoveryCode: req.RecoveryCode,

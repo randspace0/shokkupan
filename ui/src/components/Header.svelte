@@ -4,6 +4,8 @@
 
   export let isAuthenticated = false;
   export let username = "";
+  // "" until known; Settings is admin-only
+  export let role = "";
   export let showExecutionButton = false;
   export let executionWindowVisible = false;
 
@@ -30,7 +32,7 @@
 
   {#if isAuthenticated}
     <ul class="flex flex-wrap items-center gap-1 text-sm font-medium">
-      {#each authenticatedLinks.filter((l) => l.href !== "/logout") as link}
+      {#each authenticatedLinks.filter((l) => l.href !== "/logout" && (l.href !== "/settings" || role === "admin")) as link}
         <li><a class={linkStyle} href={link["href"]}>{link["text"]}</a></li>
       {/each}
     </ul>
@@ -58,6 +60,7 @@
           </div>
         </div>
         <span class="font-semibold hidden sm:inline">{username}</span>
+        {#if role}<span class="badge badge-soft badge-sm hidden sm:inline-flex">{role}</span>{/if}
       {/if}
       <a class={linkStyle} href="/logout">Logout</a>
     </div>

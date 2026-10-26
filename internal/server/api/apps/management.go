@@ -8,6 +8,7 @@ import (
 	"github.com/randspace0/shokkupan/internal/server/commands"
 	shokkudokku "github.com/randspace0/shokkupan/internal/server/dokku"
 	"github.com/randspace0/shokkupan/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/server/middleware"
 	"github.com/rs/zerolog/log"
 	"net/http"
 	"strings"
@@ -33,6 +34,7 @@ func lookupDBAppByName(e *env.Env, name string) (*models.App, error) {
 
 func GetAppsList(e *env.Env, c echo.Context) error {
 	appsList, err := e.Dokku.ListApps()
+	appsList = middleware.FilterApps(c, appsList)
 
 	apps := make([]dto.GetAppsListItem, 0)
 	for _, name := range appsList {
@@ -63,6 +65,9 @@ func GetAppsProcessReport(e *env.Env, c echo.Context) error {
 	apps := make([]dto.GetAppOverviewResponse, 0)
 	for name, psReport := range allReports {
 		if name == FilteredApp {
+			continue
+		}
+		if visible, all := middleware.VisibleApps(c); !all && !visible[name] {
 			continue
 		}
 
@@ -193,6 +198,11 @@ func DestroyApp(e *env.Env, c echo.Context) error {
 		return echo.ErrInternalServerError
 	}
 
+	// a new app reusing this name must not inherit the old assignments
+	if err := e.DB.Unscoped().Where("app_name = ?", req.Name).Delete(&models.AppAccess{}).Error; err != nil {
+		log.Error().Err(err).Str("name", req.Name).Msg("failed to clear app access")
+	}
+
 	return c.NoContent(http.StatusOK)
 }
 
@@ -224,6 +234,9 @@ func RenameApp(e *env.Env, c echo.Context) error {
 	if renameErr := e.Dokku.RenameApp(req.CurrentName, req.NewName, options); renameErr != nil {
 		return fmt.Errorf("renaming app: %w", renameErr)
 	}
+
+	// keep assignments with the app
+	e.DB.Model(&models.AppAccess{}).Where("app_name = ?", req.CurrentName).Update("app_name", req.NewName)
 
 	return c.NoContent(http.StatusOK)
 }

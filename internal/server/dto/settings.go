@@ -16,6 +16,18 @@ type User struct {
 	Name    string   `json:"name"`
 	Source  string   `json:"source"`
 	SSHKeys []string `json:"ssh_keys"`
+	Role    string   `json:"role"`
+	Apps    []string `json:"apps"`
+}
+
+type SetUserRoleRequest struct {
+	Name string `json:"name" validate:"required,max=100"`
+	Role string `json:"role" validate:"required,oneof=admin developer viewer"`
+}
+
+type SetUserAppsRequest struct {
+	Name string   `json:"name" validate:"required,max=100"`
+	Apps []string `json:"apps" validate:"max=500,dive,appName"`
 }
 type GetUsersResponse struct {
 	Users []User `json:"users"`

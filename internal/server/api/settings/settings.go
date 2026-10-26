@@ -28,6 +28,13 @@ func GetUsers(e *env.Env, c echo.Context) error {
 		return fmt.Errorf("querying db users: %w", res.Error)
 	}
 
+	appsByUser := map[string][]string{}
+	var access []models.AppAccess
+	e.DB.Find(&access)
+	for _, a := range access {
+		appsByUser[a.UserName] = append(appsByUser[a.UserName], a.AppName)
+	}
+
 	users := make([]dto.User, len(dbUsers))
 	for i, dbUser := range dbUsers {
 		keys := make([]string, len(dbUser.SSHKeys))
@@ -38,6 +45,8 @@ func GetUsers(e *env.Env, c echo.Context) error {
 			Name:    dbUser.Name,
 			Source:  dbUser.Source,
 			SSHKeys: keys,
+			Role:    dbUser.Role,
+			Apps:    appsByUser[dbUser.Name],
 		}
 	}
 

@@ -67,6 +67,7 @@ func New(cfg Config, appFS fs.FS) (*env.Env, error) {
 	api.RegisterRoutes(e, []echo.MiddlewareFunc{
 		middleware.TokenAuth(e),
 		middleware.ProvideUserContext(e),
+		middleware.Authorize(e),
 	})
 
 	dokku.SyncState(e)

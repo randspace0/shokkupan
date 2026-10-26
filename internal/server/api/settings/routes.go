@@ -14,6 +14,8 @@ func RegisterRoutes(e *env.Env, g *echo.Group) {
 	g.POST("/events", e.H(SetEventLoggingEnabled))
 
 	g.GET("/users", e.H(GetUsers))
+	g.POST("/users/role", e.H(SetUserRole))
+	g.POST("/users/apps", e.H(SetUserApps))
 	g.GET("/ssh-keys", e.H(GetSSHKeys))
 
 	g.GET("/domains", e.H(GetGlobalDomains))

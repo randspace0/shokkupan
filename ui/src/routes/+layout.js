@@ -1,8 +1,12 @@
 import {readAuthCookie, getSetupStatus} from "$lib/auth";
+import {fetchAuthDetails} from "$lib/api";
 import {redirect} from "@sveltejs/kit";
 
 export const ssr = false;
 export const prerender = false;
+
+// role of the signed-in user, fetched once per user (load runs on every navigation)
+let me = null;
 
 export async function load({url, depends}) {
 	depends("app:load");
@@ -28,7 +32,10 @@ export async function load({url, depends}) {
 		throw redirect(302, "/setup");
 
 	const authDetails = await readAuthCookie();
-	if (authDetails) return {authDetails};
+	if (authDetails) {
+		if (!me || me.username !== authDetails.name) me = (await fetchAuthDetails()) ?? null;
+		return {authDetails, role: me?.role ?? ""};
+	}
 
 	const loginMethod = setupStatus["method"];
 	const loginBasePath = `/login/${loginMethod}`

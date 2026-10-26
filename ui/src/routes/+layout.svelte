@@ -59,6 +59,7 @@
         <Header
           {isAuthenticated}
           username={data.authDetails?.name ?? ""}
+          role={data.role ?? ""}
           {showExecutionButton}
           {executionWindowVisible}
           on:executionButtonClicked={toggleExecutionWindow}
