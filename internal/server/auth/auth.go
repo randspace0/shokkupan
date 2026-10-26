@@ -114,6 +114,7 @@ func (a *baseAuthenticator) SetTokenCookies(c echo.Context, jwt string) string {
 		value:    dataCookieValue,
 		httpOnly: false,
 		lifetime: a.tokenLifetime,
+		secure:   isSecureRequest(c.Request()),
 	}
 	c.SetCookie(makeAuthCookie(dataCookieValues))
 
@@ -123,6 +124,7 @@ func (a *baseAuthenticator) SetTokenCookies(c echo.Context, jwt string) string {
 		value:    signatureCookieValue,
 		httpOnly: true,
 		lifetime: a.tokenLifetime,
+		secure:   isSecureRequest(c.Request()),
 	}
 	c.SetCookie(makeAuthCookie(signatureCookieValues))
 
@@ -130,8 +132,8 @@ func (a *baseAuthenticator) SetTokenCookies(c echo.Context, jwt string) string {
 }
 
 func (a *baseAuthenticator) ClearTokenCookies(c echo.Context) {
-	c.SetCookie(clearAuthCookie(DataCookieName, false, a.cookieDomain))
-	c.SetCookie(clearAuthCookie(SignatureCookieName, true, a.cookieDomain))
+	c.SetCookie(clearAuthCookie(DataCookieName, false, a.cookieDomain, isSecureRequest(c.Request())))
+	c.SetCookie(clearAuthCookie(SignatureCookieName, true, a.cookieDomain, isSecureRequest(c.Request())))
 }
 
 func (a *baseAuthenticator) GetSigningKey() []byte {
