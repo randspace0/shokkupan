@@ -64,7 +64,11 @@ create-shokku-app() {
 
   if [ -z "$SHOKKU_CERT" ]; then
     echo "==> enabling letsencrypt"
-    dokku letsencrypt:enable shokku &>/dev/null
+    if [ -n "$SHOKKU_LETSENCRYPT_EMAIL" ]; then
+      dokku letsencrypt:set shokku email "$SHOKKU_LETSENCRYPT_EMAIL" &>/dev/null
+    fi
+    # not silenced: a failure here (bad email, DNS, rate limit) must be visible
+    dokku letsencrypt:enable shokku
   else
     echo "==> adding certificate from SHOKKU_CERT"
     dokku certs:add shokku < "$SHOKKU_CERT"
@@ -87,6 +91,12 @@ main() {
       echo "Please setup letsencrypt using the instructions at https://dokku.com/docs/deployment/application-deployment/#setting-up-ssl" 1>&2
       exit 1
     fi
+  fi
+
+  if [ -z "$SHOKKU_CERT" ] && [ -z "$SHOKKU_LETSENCRYPT_EMAIL" ] \
+    && [ -z "$(dokku letsencrypt:report --global --letsencrypt-global-email 2>/dev/null)" ]; then
+    echo "No letsencrypt email: export SHOKKU_LETSENCRYPT_EMAIL=you@example.com, or run 'dokku letsencrypt:set --global email you@example.com'" 1>&2
+    exit 1
   fi
 
   for plugin in redis postgres mongo mysql; do
