@@ -6,12 +6,14 @@
 package sysmon
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/randspace0/shokkupan/internal/discord"
 	"github.com/randspace0/shokkupan/internal/env"
 	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/rs/zerolog/log"
@@ -24,6 +26,8 @@ const (
 	cpuSpike = 90.0 // percent
 	memSpike = 90.0 // percent
 	netSpike = 50e6 // bytes/second, rx or tx
+
+	colorSpike = 0xE67E22
 )
 
 type cpuTimes struct{ idle, total uint64 }
@@ -120,16 +124,62 @@ func Enabled(e *env.Env) bool {
 	return s.ServerMonitoring
 }
 
-func logSpikes(s models.ServerSample) {
+// spike is one threshold crossing in a sample.
+type spike struct {
+	Kind    string // "cpu", "memory" or "network"
+	Message string
+}
+
+func detectSpikes(s models.ServerSample) []spike {
+	var out []spike
 	if s.CPUPercent >= cpuSpike {
-		log.Warn().Float64("cpu_percent", s.CPUPercent).Msg("sysmon: cpu spike")
+		out = append(out, spike{"cpu", fmt.Sprintf("CPU at %.0f%% (threshold %.0f%%)", s.CPUPercent, cpuSpike)})
 	}
 	if s.MemPercent >= memSpike {
-		log.Warn().Float64("mem_percent", s.MemPercent).Msg("sysmon: memory spike")
+		out = append(out, spike{"memory", fmt.Sprintf("Memory at %.0f%% (threshold %.0f%%)", s.MemPercent, memSpike)})
 	}
 	if s.NetRxBps >= netSpike || s.NetTxBps >= netSpike {
-		log.Warn().Float64("rx_bps", s.NetRxBps).Float64("tx_bps", s.NetTxBps).
-			Msg("sysmon: network spike")
+		out = append(out, spike{"network", fmt.Sprintf("Network in %.1f MB/s, out %.1f MB/s (threshold %.0f MB/s)",
+			s.NetRxBps/1e6, s.NetTxBps/1e6, netSpike/1e6)})
+	}
+	return out
+}
+
+// alertCooldown stops a sustained spike from posting every 15 seconds.
+const alertCooldown = 15 * time.Minute
+
+type cooldown struct{ last map[string]time.Time }
+
+// due reports whether kind may alert now, and records it if so.
+func (c *cooldown) due(kind string, now time.Time) bool {
+	if c.last == nil {
+		c.last = map[string]time.Time{}
+	}
+	if t, ok := c.last[kind]; ok && now.Sub(t) < alertCooldown {
+		return false
+	}
+	c.last[kind] = now
+	return true
+}
+
+// alertSpikes logs every spike and posts the ones past their cooldown to the
+// global Discord webhook (a no-op when the plugin or webhook is missing).
+func alertSpikes(e *env.Env, cd *cooldown, spikes []spike, now time.Time) {
+	for _, sp := range spikes {
+		log.Warn().Str("kind", sp.Kind).Msg("sysmon: " + sp.Message)
+		if !cd.due(sp.Kind, now) {
+			continue
+		}
+		url, err := discord.Get(e.Dokku.Exec, "")
+		if err != nil {
+			if !errors.Is(err, discord.ErrNotConfigured) && !errors.Is(err, discord.ErrNotInstalled) {
+				log.Error().Err(err).Msg("sysmon: failed to get discord webhook")
+			}
+			return
+		}
+		if err := discord.Notify(url, "Server "+sp.Kind+" spike", sp.Message, colorSpike); err != nil {
+			log.Error().Err(err).Msg("sysmon: failed to send alert")
+		}
 	}
 }
 
@@ -141,6 +191,7 @@ func Run(e *env.Env) {
 		prevTx   uint64
 		prevTime time.Time
 		primed   bool
+		cd       cooldown
 	)
 	for ; ; time.Sleep(interval) {
 		if !Enabled(e) {
@@ -167,7 +218,7 @@ func Run(e *env.Env) {
 			if err := e.DB.Create(&s).Error; err != nil {
 				log.Error().Err(err).Msg("sysmon: failed to record sample")
 			}
-			logSpikes(s)
+			alertSpikes(e, &cd, detectSpikes(s), now)
 			e.DB.Unscoped().Where("created_at < ?", now.Add(-retention)).Delete(&models.ServerSample{})
 		}
 		prevCPU, prevRx, prevTx, prevTime, primed = cpu, rx, tx, now, true
