@@ -319,3 +319,12 @@ type SetAppBuildDirectoryRequest struct {
 type ClearAppBuildDirectoryRequest struct {
 	Name string `query:"name" validate:"appName"`
 }
+
+type GetAppDeploysRequest struct {
+	Name string `query:"name" validate:"appName"`
+}
+
+type GetAppDeployOutputRequest struct {
+	Name string `query:"name" validate:"appName"`
+	ID   string `query:"id" validate:"alphanum,min=1,max=32"`
+}
