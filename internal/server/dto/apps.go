@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"github.com/texm/dokku-go"
+	"github.com/randspace0/shokkupan/internal/resources"
 	"time"
 )
 
@@ -155,13 +155,13 @@ type GetAppProcessReportRequest struct {
 }
 
 type AppProcessInfo struct {
-	Scale     int                    `json:"scale"`
-	Resources dokku.ResourceSettings `json:"resources"`
+	Scale     int                        `json:"scale"`
+	Resources resources.ResourceSettings `json:"resources"`
 }
 
 type GetAppProcessReportResponse struct {
-	ResourceDefaults dokku.ResourceSettings    `json:"resource_defaults"`
-	Processes        map[string]AppProcessInfo `json:"processes"`
+	ResourceDefaults resources.ResourceSettings `json:"resource_defaults"`
+	Processes        map[string]AppProcessInfo  `json:"processes"`
 }
 
 type AppResources struct {
