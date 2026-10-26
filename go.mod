@@ -1,4 +1,4 @@
-module gitlab.com/texm/shokku
+module github.com/randspace0/shokkupan
 
 go 1.18
 

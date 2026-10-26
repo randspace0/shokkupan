@@ -4,13 +4,13 @@ package monitor
 
 import (
 	"errors"
+	"github.com/randspace0/shokkupan/internal/discord"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
+	"github.com/randspace0/shokkupan/internal/server/dokku"
+	"github.com/randspace0/shokkupan/internal/stats"
 	"github.com/rs/zerolog/log"
 	dokkugo "github.com/texm/dokku-go"
-	"gitlab.com/texm/shokku/internal/discord"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
-	"gitlab.com/texm/shokku/internal/server/dokku"
-	"gitlab.com/texm/shokku/internal/stats"
 	"time"
 )
 

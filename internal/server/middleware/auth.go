@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/server/auth"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/server/auth"
 	"strings"
 )
 

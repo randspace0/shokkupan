@@ -2,14 +2,14 @@ package auth
 
 import (
 	"github.com/pquerna/otp/totp"
+	"github.com/randspace0/shokkupan/internal/env"
+	auth "github.com/randspace0/shokkupan/internal/server/auth"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	auth "gitlab.com/texm/shokku/internal/server/auth"
-	"gitlab.com/texm/shokku/internal/server/dto"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"gitlab.com/texm/shokku/internal/models"
+	"github.com/randspace0/shokkupan/internal/models"
 )
 
 func HandlePasswordLogin(e *env.Env, c echo.Context) error {

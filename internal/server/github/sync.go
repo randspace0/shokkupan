@@ -9,9 +9,9 @@ import (
 	"time"
 
 	gh "github.com/google/go-github/v48/github"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/models"
 	"gorm.io/gorm/clause"
 )
 

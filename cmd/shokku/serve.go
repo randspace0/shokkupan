@@ -11,10 +11,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/server"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/server"
 )
 
 //go:embed all:dist/*

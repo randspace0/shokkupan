@@ -2,12 +2,12 @@ package env
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/randspace0/shokkupan/internal/server/auth"
 	"github.com/texm/dokku-go"
-	"gitlab.com/texm/shokku/internal/server/auth"
 	"gorm.io/gorm"
 )
 
-// Version is set at build time: -ldflags "-X gitlab.com/texm/shokku/internal/env.Version=v1.2.3"
+// Version is set at build time: -ldflags "-X github.com/randspace0/shokkupan/internal/env.Version=v1.2.3"
 var Version = "dev"
 
 type Env struct {

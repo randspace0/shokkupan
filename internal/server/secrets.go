@@ -7,8 +7,8 @@ import (
 	"encoding/gob"
 	"errors"
 	"fmt"
+	"github.com/randspace0/shokkupan/internal/models"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/models"
 	"gorm.io/gorm"
 )
 

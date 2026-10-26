@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/labstack/echo/v4"
-	"gitlab.com/texm/shokku/internal/env"
+	"github.com/randspace0/shokkupan/internal/env"
 )
 
 func RegisterRoutes(e *env.Env, g *echo.Group) {

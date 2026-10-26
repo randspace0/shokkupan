@@ -4,17 +4,17 @@ import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
+	"github.com/randspace0/shokkupan/internal/models"
+	"github.com/randspace0/shokkupan/internal/randstr"
+	"github.com/randspace0/shokkupan/internal/server/auth"
 	"github.com/rs/zerolog/log"
-	"gitlab.com/texm/shokku/internal/models"
-	"gitlab.com/texm/shokku/internal/randstr"
-	"gitlab.com/texm/shokku/internal/server/auth"
 	"image/png"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/pquerna/otp/totp"
-	"gitlab.com/texm/shokku/internal/env"
-	"gitlab.com/texm/shokku/internal/server/dto"
+	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/server/dto"
 )
 
 func GenerateTotp(e *env.Env, c echo.Context) error {

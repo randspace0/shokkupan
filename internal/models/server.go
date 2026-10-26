@@ -1,7 +1,7 @@
 package models
 
 import (
-	"gitlab.com/texm/shokku/internal/server/auth"
+	"github.com/randspace0/shokkupan/internal/server/auth"
 	"gorm.io/gorm"
 	"time"
 )
