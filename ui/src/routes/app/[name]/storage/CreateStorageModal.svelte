@@ -79,7 +79,7 @@
   {/if}
 
   <div class="mt-3">
-    <button class="btn" class:btn-loading on:click={dispatchCreateStorage}>
+    <button class="btn" class:btn-loading={loading} on:click={dispatchCreateStorage}>
       Submit
     </button>
   </div>

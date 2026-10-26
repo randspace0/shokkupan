@@ -33,7 +33,7 @@
     class="btn btn-primary my-2"
     on:click={() => dispatch("save")}
     class:hidden={!dirty}
-    class:btn-loading
+    class:btn-loading={loading}
   >
     Update
   </button>
