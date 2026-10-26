@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/randspace0/shokkupan/internal/env"
+	"github.com/randspace0/shokkupan/internal/resources"
 	"github.com/randspace0/shokkupan/internal/server/commands"
 	"github.com/randspace0/shokkupan/internal/server/dto"
 	"github.com/rs/zerolog/log"
@@ -40,9 +41,13 @@ func GetAppProcessReport(e *env.Env, c echo.Context) error {
 		return err.ToHTTP()
 	}
 
-	resourceReport, err := e.Dokku.GetAppResourceReport(req.Name)
+	reportOut, err := e.Dokku.Exec("resource:report " + req.Name)
 	if err != nil {
 		return fmt.Errorf("getting app resource report: %w", err)
+	}
+	resourceReport, err := resources.ParseResourceReport(reportOut)
+	if err != nil {
+		return fmt.Errorf("parsing app resource report: %w", err)
 	}
 
 	processScale, err := e.Dokku.GetAppProcessScale(req.Name)
