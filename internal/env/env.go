@@ -7,7 +7,8 @@ import (
 	"gorm.io/gorm"
 )
 
-const Version = "0.0.1"
+// Version is set at build time: -ldflags "-X gitlab.com/texm/shokku/internal/env.Version=v1.2.3"
+var Version = "dev"
 
 type Env struct {
 	Version string
