@@ -9,6 +9,8 @@ func RegisterRoutes(e *env.Env, g *echo.Group) {
 	g.GET("/list", e.H(GetAppsList))
 	g.GET("/report", e.H(GetAppsProcessReport))
 	g.GET("/overview", e.H(GetAppOverview))
+	g.GET("/deploys", e.H(ListAppDeploys))
+	g.GET("/deploys/output", e.H(GetAppDeployOutput))
 
 	g.POST("/create", e.H(CreateApp))
 	g.POST("/start", e.H(StartApp))

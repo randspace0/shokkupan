@@ -298,3 +298,17 @@ export const runAppCron = async (appName, id) => {
 		.post({"name": appName, id})
 		.json(res => res["execution_id"]);
 }
+
+export const getAppDeploys = async (appName) => {
+	return await appsClient.url("deploys")
+		.query({"name": appName})
+		.get()
+		.json(res => res["deploys"]);
+}
+
+export const getAppDeployOutput = async (appName, id) => {
+	return await appsClient.url("deploys/output")
+		.query({"name": appName, id})
+		.get()
+		.json(res => res["output"]);
+}
