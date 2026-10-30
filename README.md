@@ -29,6 +29,10 @@ The first login goes through a GitHub App. Open `/setup` on your domain and ente
 
 Builds are heavy (npm install plus a Go compile). On a small host, build the image elsewhere and deploy it with `dokku git:from-image`.
 
+SQLite access uses a single pooled connection so monitoring writes and sign-in
+metadata reads cannot contend for locks within the server process. Keep one
+server process per database file; separate processes do not share this pool.
+
 ## Plugins
 
 Optional Dokku plugins live in [`plugins/`](plugins) and are installed on the Dokku host separately from shokkupan:

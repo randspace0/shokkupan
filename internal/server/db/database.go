@@ -20,6 +20,14 @@ func Init(dsn string) (*gorm.DB, error) {
 		return nil, err
 	}
 
+	sqlDB, err := db.DB()
+	if err != nil {
+		return nil, err
+	}
+	// Serialize SQLite access between background writers and sign-in readers.
+	sqlDB.SetMaxOpenConns(1)
+	sqlDB.SetMaxIdleConns(1)
+
 	err = db.AutoMigrate(
 		&models.Server{},
 		&models.ServerSecrets{},
